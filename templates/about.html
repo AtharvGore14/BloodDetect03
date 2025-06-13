@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About - BloodDetect</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap');
+    
+    :root {
+      --primary-red: #e11d48;
+      --primary-blue: #0ea5e9;
+      --accent-purple: #8b5cf6;
+      --accent-pink: #ec4899;
+      --dark-bg: #0f0f23;
+      --darker-bg: #070720;
+      --card-bg: rgba(15, 15, 35, 0.8);
+      --glass-bg: rgba(255, 255, 255, 0.03);
+      --glass-border: rgba(255, 255, 255, 0.08);
+      --text-primary: #f8fafc;
+      --text-secondary: #cbd5e1;
+      --text-muted: #94a3b8;
+      --gradient-primary: linear-gradient(135deg, #e11d48, #8b5cf6);
+      --gradient-secondary: linear-gradient(135deg, #0ea5e9, #ec4899);
+      --gradient-bg: linear-gradient(135deg, #0f0f23 0%, #1e1b4b 50%, #0f0f23 100%);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--gradient-bg);
+      color: var(--text-primary);
+      line-height: 1.6;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Animated background particles */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 20% 50%, rgba(225, 29, 72, 0.1) 0%, transparent 50%),
+                  radial-gradient(circle at 80% 20%, rgba(14, 165, 233, 0.1) 0%, transparent 50%),
+                  radial-gradient(circle at 40% 80%, rgba(139, 92, 246, 0.1) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: -1;
+      animation: backgroundShift 20s ease-in-out infinite;
+    }
+
+    @keyframes backgroundShift {
+      0%, 100% { opacity: 1; }
+      33% { opacity: 0.8; }
+      66% { opacity: 0.6; }
+    }
+
+    /* Navbar */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 5rem;
+      background: rgba(15, 15, 35, 0.9);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--glass-border);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      transition: all 0.3s ease;
+    }
+
+    .navbar h1 {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.8rem;
+      font-weight: 600;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      position: relative;
+    }
+
+    .navbar h1::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--gradient-primary);
+      transform: scaleX(0);
+      animation: logoUnderline 2s ease-out forwards;
+    }
+
+    @keyframes logoUnderline {
+      to { transform: scaleX(1); }
+    }
+
+    .navbar nav {
+      display: flex;
+      gap: 2rem;
+    }
+
+    .navbar nav a {
+      text-decoration: none;
+      color: var(--text-secondary);
+      font-weight: 500;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .navbar nav a::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: var(--gradient-primary);
+      opacity: 0.1;
+      transition: left 0.3s ease;
+      z-index: -1;
+    }
+
+    .navbar nav a:hover::before,
+    .navbar nav a.active::before {
+      left: 0;
+    }
+
+    .navbar nav a:hover,
+    .navbar nav a.active {
+      color: var(--text-primary);
+      transform: translateY(-2px);
+    }
+
+    /* Hero Section */
+    .hero-section {
+      position: relative;
+      height: 70vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .hero-content {
+      text-align: center;
+      max-width: 900px;
+      padding: 3rem;
+      background: rgba(15, 15, 35, 0.6);
+      backdrop-filter: blur(20px);
+      border-radius: 24px;
+      border: 1px solid var(--glass-border);
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+      animation: heroFadeIn 1s ease-out;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-content::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: conic-gradient(from 0deg, transparent, rgba(225, 29, 72, 0.1), transparent, rgba(14, 165, 233, 0.1), transparent);
+      animation: rotate 20s linear infinite;
+      z-index: -1;
+    }
+
+    @keyframes heroFadeIn {
+      from { 
+        opacity: 0; 
+        transform: translateY(30px) scale(0.95); 
+      }
+      to { 
+        opacity: 1; 
+        transform: translateY(0) scale(1); 
+      }
+    }
+
+    @keyframes rotate {
+      to { transform: rotate(360deg); }
+    }
+
+    .hero-content h1 {
+      font-size: 3.5rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, var(--text-primary), var(--primary-blue), var(--accent-purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: textShimmer 3s ease-in-out infinite;
+    }
+
+    @keyframes textShimmer {
+      0%, 100% { filter: brightness(1); }
+      50% { filter: brightness(1.2); }
+    }
+
+    .hero-content p {
+      font-size: 1.2rem;
+      color: var(--text-secondary);
+      line-height: 1.8;
+    }
+
+    /* Main Container */
+    .main-container {
+      max-width: 1200px;
+      margin: -50px auto 0;
+      padding: 0 2rem;
+      position: relative;
+      z-index: 10;
+    }
+
+    /* Content Sections */
+    .content-section {
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      margin-bottom: 3rem;
+      overflow: hidden;
+      transition: all 0.4s ease;
+      position: relative;
+    }
+
+    .content-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+      transition: left 0.6s ease;
+    }
+
+    .content-section:hover::before {
+      left: 100%;
+    }
+
+    .content-section:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+      border-color: rgba(255, 255, 255, 0.15);
+    }
+
+    .content-header {
+      padding: 2.5rem;
+      background: var(--gradient-primary);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .content-header::after {
+      content: '';
+      position: absolute;
+      top: -50px;
+      right: -50px;
+      width: 100px;
+      height: 100px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(180deg); }
+    }
+
+    .content-header h2 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: white;
+    }
+
+    .content-header .subtitle {
+      font-size: 1.1rem;
+      color: rgba(255, 255, 255, 0.9);
+      font-weight: 400;
+    }
+
+    .content-body {
+      padding: 2.5rem;
+    }
+
+    .content-body p {
+      margin-bottom: 1.5rem;
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+      line-height: 1.8;
+    }
+
+    /* Highlight Box */
+    .highlight-box {
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      padding: 3rem;
+      margin: 3rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .highlight-box::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(45deg, 
+        rgba(225, 29, 72, 0.05) 0%, 
+        rgba(139, 92, 246, 0.05) 50%, 
+        rgba(14, 165, 233, 0.05) 100%);
+      z-index: -1;
+    }
+
+    .highlight-box h2 {
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+      background: var(--gradient-secondary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .highlight-box p {
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      margin-bottom: 1rem;
+    }
+
+    /* Info Cards */
+    .info-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+      margin: 3rem 0;
+    }
+
+    .info-card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: all 0.4s ease;
+      position: relative;
+      group: hover;
+    }
+
+    .info-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: var(--gradient-primary);
+      transform: scaleX(0);
+      transition: transform 0.4s ease;
+    }
+
+    .info-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .info-card:hover {
+      transform: translateY(-8px);
+      border-color: rgba(255, 255, 255, 0.2);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .info-card-icon {
+      height: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--gradient-primary);
+      font-size: 2.5rem;
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .info-card-icon::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: conic-gradient(from 0deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      animation: iconRotate 8s linear infinite;
+    }
+
+    @keyframes iconRotate {
+      to { transform: rotate(360deg); }
+    }
+
+    .info-card-content {
+      padding: 2rem;
+    }
+
+    .info-card-content h3 {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: var(--text-primary);
+    }
+
+    .info-card-content p {
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    /* Process Section */
+    .process-section {
+      padding: 4rem 0;
+    }
+
+    .section-heading {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .section-heading h2 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .section-heading p {
+      font-size: 1.2rem;
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .process-steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .process-step {
+      text-align: center;
+      padding: 2rem;
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: 16px;
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .process-step::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(225, 29, 72, 0.1), rgba(139, 92, 246, 0.1));
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    .process-step:hover::before {
+      opacity: 1;
+    }
+
+    .process-step:hover {
+      transform: translateY(-5px);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .step-number {
+      width: 60px;
+      height: 60px;
+      background: var(--gradient-primary);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin: 0 auto 1.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .step-number::after {
+      content: '';
+      position: absolute;
+      top: -5px;
+      left: -5px;
+      width: calc(100% + 10px);
+      height: calc(100% + 10px);
+      border-radius: 50%;
+      border: 2px solid rgba(225, 29, 72, 0.3);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.1); opacity: 0.5; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .step-content h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: var(--text-primary);
+      position: relative;
+      z-index: 1;
+    }
+
+    .step-content p {
+      color: var(--text-secondary);
+      line-height: 1.6;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Testimonial Section */
+    .testimonial-section {
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      padding: 5rem 0;
+      margin: 4rem 0;
+      border-radius: 20px;
+      border: 1px solid var(--glass-border);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .testimonial-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(45deg, 
+        rgba(225, 29, 72, 0.05), 
+        rgba(14, 165, 233, 0.05), 
+        rgba(139, 92, 246, 0.05));
+      z-index: -1;
+    }
+
+    .testimonial-container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .testimonial {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 2.5rem;
+      margin-bottom: 2rem;
+      transition: all 0.4s ease;
+    }
+
+    .testimonial:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .testimonial-text {
+      font-style: italic;
+      font-size: 1.1rem;
+      line-height: 1.8;
+      margin-bottom: 2rem;
+      color: var(--text-secondary);
+    }
+
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+    }
+
+    .testimonial-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: var(--gradient-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 1rem;
+      color: white;
+      font-weight: 600;
+    }
+
+    .testimonial-info h4 {
+      font-size: 1.1rem;
+      margin-bottom: 0.2rem;
+      color: var(--text-primary);
+    }
+
+    .testimonial-info p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    /* FAQ Section */
+    .faq-section {
+      padding: 5rem 0;
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      border-radius: 20px;
+      border: 1px solid var(--glass-border);
+      margin: 4rem 0;
+    }
+
+    .faq-container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .faq-item {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      margin-bottom: 1rem;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .faq-item:hover {
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .faq-question {
+      padding: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .faq-question:hover {
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .faq-question h3 {
+      font-size: 1.1rem;
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    .faq-question i {
+      color: var(--primary-red);
+      transition: transform 0.3s ease;
+    }
+
+    .faq-answer {
+      padding: 0 1.5rem 1.5rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    /* Footer */
+    .footer {
+      background: var(--darker-bg);
+      padding: 4rem 5% 2rem;
+      margin-top: 4rem;
+      border-top: 1px solid var(--glass-border);
+      position: relative;
+    }
+
+    .footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: var(--gradient-primary);
+    }
+
+    .footer-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 3rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .footer-col h3 {
+      font-size: 1.3rem;
+      margin-bottom: 1.5rem;
+      color: var(--text-primary);
+      position: relative;
+      padding-bottom: 0.5rem;
+    }
+
+    .footer-col h3::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 50px;
+      height: 2px;
+      background: var(--gradient-primary);
+    }
+
+    .footer-col p,
+    .footer-col a {
+      color: var(--text-muted);
+      margin-bottom: 0.8rem;
+      display: block;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .footer-col a:hover {
+      color: var(--primary-red);
+      transform: translateX(5px);
+    }
+
+    .contact-info {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .contact-info i {
+      margin-right: 10px;
+      color: var(--primary-red);
+      width: 20px;
+    }
+
+    .copyright {
+      text-align: center;
+      padding-top: 2rem;
+      margin-top: 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text-muted);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .navbar {
+        flex-direction: column;
+        padding: 1.5rem 2rem;
+        gap: 1rem;
+      }
+
+      .navbar nav {
+        gap: 1rem;
+      }
+
+      .hero-content {
+        padding: 2rem;
+        margin: 0 1rem;
+      }
+
+      .hero-content h1 {
+        font-size: 2.5rem;
+      }
+
+      .main-container {
+        padding: 0 1rem;
+      }
+
+      .info-cards {
+        grid-template-columns: 1fr;
+      }
+
+      .process-steps {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Smooth scrolling and animations */
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* Add some micro-interactions */
+    .info-card-icon i {
+      transition: transform 0.3s ease;
+    }
+
+    .info-card:hover .info-card-icon i {
+      transform: scale(1.1) rotate(5deg);
+    }
+
+    .step-number {
+      transition: all 0.3s ease;
+    }
+
+    .process-step:hover .step-number {
+      transform: scale(1.1);
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Navbar -->
+  <header class="navbar">
+    <h1>BloodDetect</h1>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/about" class="active">About</a>
+      <a href="/team">Team</a>
+      <a href="/predictor">Predictor</a>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-content">
+      <h1>About BloodDetect</h1>
+      <p>Revolutionizing healthcare with AI-powered fingerprint analysis for non-invasive blood group detection</p>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <div class="main-container">
+    <section class="about-section">
+      <!-- Main Technology Section -->
+      <div class="content-section">
+        <div class="content-header">
+          <h2>Our Revolutionary Technology</h2>
+          <p class="subtitle">Where biometrics meets hematology</p>
+        </div>
+        <div class="content-body">
+          <p>Fingerprints are unique to each individual, formed by ridges and valleys on the skin's surface. Even identical twins have distinct fingerprints. This uniqueness arises from both genetic and environmental factors during fetal development, making fingerprints a reliable biometric identifier.</p>
+          
+          <p>The patterns—loops, whorls, and arches—are widely used in forensic science and identity verification due to their stability and individuality. At BloodDetect, we've harnessed this biological uniqueness and discovered correlations between fingerprint patterns and blood group antigens.</p>
+          
+          <p>Through extensive research and advanced machine learning algorithms, we've identified subtle relationships between dermatoglyphic patterns and blood group determination. Our proprietary neural network can now predict blood types with remarkable accuracy from a simple fingerprint scan.</p>
+        </div>
+      </div>
+
+      <!-- How It Works Section -->
+      <div class="highlight-box">
+        <h2>The Science Behind BloodDetect</h2>
+        <p>Blood group antigens, like A, B, AB, and O, are determined by specific inherited alleles. These genes may be linked to physical traits that influence fingerprint patterns. Research has shown that certain ridge patterns occur with varying frequencies among different blood groups.</p>
+        <p>Our AI analyzes minutiae points, ridge density, pattern type, and over 30 other biometric markers to establish correlations with blood antigens. The relationship between dermatoglyphics and blood groups stems from their shared embryonic origin during the first trimester of fetal development.</p>
+      </div>
+
+      <!-- Info Cards -->
+      <div class="info-cards">
+        <div class="info-card">
+          <div class="info-card-icon">
+            <i class="fas fa-fingerprint"></i>
+          </div>
+          <div class="info-card-content">
+            <h3>Dermatoglyphic Analysis</h3>
+            <p>Our algorithm examines ridge patterns, bifurcations, and terminations in fingerprints to identify unique markers corresponding to specific blood antigens. Ridge density and pattern distribution vary significantly between blood types, providing reliable indicators for our predictive model.</p>
+          </div>
+        </div>
+        
+        <div class="info-card">
+          <div class="info-card-icon">
+            <i class="fas fa-dna"></i>
+          </div>
+          <div class="info-card-content">
+            <h3>Genetic Correlation</h3>
+            <p>Both blood groups and fingerprint patterns are genetically determined. The genes controlling blood antigen expression may influence embryonic development of ridge patterns. Our research has identified specific ridge configurations that consistently appear with higher frequency in certain blood groups.</p>
+          </div>
+        </div>
+        
+        <div class="info-card">
+          <div class="info-card-icon">
+            <i class="fas fa-brain"></i>
+          </div>
+          <div class="info-card-content">
+            <h3>AI & Machine Learning</h3>
+            <p>Our deep learning neural network has been trained on over 6000 fingerprint samples with verified blood types. Using convolutional networks and ensemble learning, the system can now predict blood groups with high accuracy, constantly improving through continuous learning.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Process Section -->
+      <div class="process-section">
+        <div class="section-heading">
+          <h2>How BloodDetect Works</h2>
+          <p>A simple, non-invasive process to determine your blood group</p>
+        </div>
+        
+        <div class="process-steps">
+          <div class="process-step">
+            <div class="step-number">1</div>
+            <div class="step-content">
+              <h3>Upload Your Fingerprint</h3>
+              <p>Upload a clear and well-lit image of your finger.</p>
+            </div>
+          </div>
+          
+          <div class="process-step">
+            <div class="step-number">2</div>
+            <div class="step-content">
+              <h3>Process and Analyze</h3>
+              <p>Our AI analyzes the fingerprint image to extract features and determine your blood group.</p>
+            </div>
+          </div>
+          
+          <div class="process-step">
+            <div class="step-number">3</div>
+            <div class="step-content">
+              <h3>Result</h3>
+              <p>Receive your blood group result in seconds.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>   

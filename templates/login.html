@@ -1,0 +1,918 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - BloodDetect System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #e91e63;
+            --secondary: #9c27b0;
+            --tertiary: #3f51b5;
+            --quaternary: #00bcd4;
+            --background: #0a0a1a;
+            --light: #ffffff;
+            --dark: #121212;
+            --light-gray: #2d2d3a;
+            --border-radius: 20px;
+            --card-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+            --neon-glow: 0 0 20px rgba(233, 30, 99, 0.8);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background: var(--background);
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(156, 39, 176, 0.3) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(63, 81, 181, 0.3) 0%, transparent 40%);
+            color: var(--light);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 1rem;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .cosmic-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .star {
+            position: absolute;
+            background: #fff;
+            border-radius: 50%;
+            filter: blur(1px);
+            opacity: 0.8;
+            animation: twinkle var(--duration) ease-in-out infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 1; }
+        }
+
+        .container {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            max-width: 1200px;
+            z-index: 1;
+            perspective: 1000px;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        header h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            letter-spacing: 3px;
+            text-shadow: 0 0 20px rgba(233, 30, 99, 0.7);
+            background: linear-gradient(135deg, var(--primary), var(--quaternary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+                text-shadow: 0 0 20px rgba(233, 30, 99, 0.7);
+            }
+            50% {
+                transform: translateY(-15px);
+                text-shadow: 0 0 30px rgba(233, 30, 99, 0.9);
+            }
+            100% {
+                transform: translateY(0px);
+                text-shadow: 0 0 20px rgba(233, 30, 99, 0.7);
+            }
+        }
+
+        .logo-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: white;
+            margin-right: 6rem;
+            animation: fadeInRotate 1.5s ease;
+            position: relative;
+        }
+
+        @keyframes fadeInRotate {
+            from {
+                opacity: 0;
+                transform: translateX(-50px) rotateY(-30deg);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0) rotateY(0);
+            }
+        }
+
+        .logo {
+            font-size: 10rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--quaternary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            filter: drop-shadow(0 0 15px rgba(233, 30, 99, 0.5));
+            animation: pulsate 3s infinite;
+        }
+
+        @keyframes pulsate {
+            0% {
+                transform: scale(1);
+                filter: drop-shadow(0 0 15px rgba(233, 30, 99, 0.5));
+            }
+            50% {
+                transform: scale(1.1);
+                filter: drop-shadow(0 0 25px rgba(233, 30, 99, 0.8));
+            }
+            100% {
+                transform: scale(1);
+                filter: drop-shadow(0 0 15px rgba(233, 30, 99, 0.5));
+            }
+        }
+
+        .tagline {
+            font-size: 1.5rem;
+            max-width: 300px;
+            text-align: center;
+            margin-top: 1rem;
+            line-height: 1.6;
+            font-weight: 300;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            animation: fadeInDelayed 1s ease forwards;
+            animation-delay: 0.8s;
+        }
+
+        @keyframes fadeInDelayed {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .dna-helix {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80px;
+            height: 200px;
+            z-index: -1;
+        }
+
+        .strand {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+        }
+
+        .strand-1 { animation: rotateStrand 8s linear infinite; }
+        .strand-2 { animation: rotateStrand 8s linear infinite reverse; }
+
+        @keyframes rotateStrand {
+            0% { transform: rotateY(0deg); }
+            100% { transform: rotateY(360deg); }
+        }
+
+        .form-container {
+            background: rgba(24, 24, 36, 0.8);
+            backdrop-filter: blur(10px);
+            box-shadow: var(--card-shadow), 0 0 30px rgba(233, 30, 99, 0.3);
+            border-radius: var(--border-radius);
+            padding: 3rem 3.5rem;
+            width: 100%;
+            max-width: 460px;
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: slideIn 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            border: 1px solid rgba(233, 30, 99, 0.3);
+            overflow: hidden;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(50px) rotateY(20deg);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0) rotateY(0);
+            }
+        }
+
+        .form-container:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--tertiary), var(--quaternary));
+            background-size: 300% 300%;
+            animation: gradientFlow 3s ease infinite;
+        }
+
+        @keyframes gradientFlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .form-container:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: var(--card-shadow), 0 0 40px rgba(233, 30, 99, 0.5);
+        }
+
+        .glass-effect {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0));
+            border-radius: var(--border-radius);
+        }
+
+        .text-center {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            position: relative;
+        }
+
+        .app-icon {
+            font-size: 4rem;
+            background: linear-gradient(135deg, var(--primary), var(--quaternary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 1.5rem;
+            filter: drop-shadow(0 0 10px rgba(233, 30, 99, 0.5));
+            animation: heartbeat 1.5s ease-in-out infinite;
+        }
+
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            14% { transform: scale(1.15); }
+            28% { transform: scale(1); }
+            42% { transform: scale(1.15); }
+            70% { transform: scale(1); }
+        }
+
+        .form-container h2 {
+            font-size: 2.5rem;
+            margin-bottom: 0.8rem;
+            font-weight: 700;
+            color: var(--light);
+            letter-spacing: 1px;
+            background: linear-gradient(135deg, var(--primary), var(--quaternary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .form-container p {
+            color: #b0b0c0;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .form-group label {
+            font-size: 1rem;
+            color: var(--light);
+            font-weight: 500;
+            margin-bottom: 0.8rem;
+            display: block;
+            transition: all 0.3s ease;
+            opacity: 0.9;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 1.2rem 1.5rem;
+            font-size: 1.1rem;
+            border-radius: var(--border-radius);
+            border: 2px solid var(--light-gray);
+            background: rgba(45, 45, 58, 0.5);
+            color: var(--light);
+            transition: all 0.4s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(233, 30, 99, 0.2), var(--neon-glow);
+        }
+
+        .form-control::placeholder {
+            color: rgba(176, 176, 192, 0.7);
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 20px;
+            top: 60%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #b0b0c0;
+            transition: all 0.3s ease;
+            z-index: 2;
+        }
+
+        .password-toggle:hover {
+            color: var(--primary);
+            text-shadow: 0 0 5px rgba(233, 30, 99, 0.5);
+        }
+
+        .btn {
+            padding: 1.3rem 0;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 1.3rem;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            letter-spacing: 1.5px;
+            box-shadow: 0 10px 25px rgba(233, 30, 99, 0.4);
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+        }
+
+        .btn:after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: 0.5s;
+        }
+
+        .btn:hover:after {
+            left: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-5px) scale(1.03);
+            box-shadow: 0 15px 35px rgba(233, 30, 99, 0.6);
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+        }
+
+        .btn:active {
+            transform: translateY(-2px) scale(1.01);
+        }
+
+        .btn i {
+            margin-right: 10px;
+        }
+
+        .sign-up-link {
+            text-align: center;
+            margin-top: 2rem;
+            font-size: 1.1rem;
+            position: relative;
+            padding-top: 1.5rem;
+        }
+
+        .sign-up-link:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 30%;
+            width: 40%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(176, 176, 192, 0.3), transparent);
+        }
+
+        .sign-up-link a {
+            color: var(--primary);
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+            text-shadow: 0 0 5px rgba(233, 30, 99, 0.3);
+        }
+
+        .sign-up-link a:after {
+            content: "";
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -3px;
+            left: 0;
+            background: linear-gradient(90deg, var(--primary), var(--quaternary));
+            transition: width 0.4s ease;
+        }
+
+        .sign-up-link a:hover:after {
+            width: 100%;
+        }
+
+        .sign-up-link a:hover {
+            text-shadow: 0 0 8px rgba(233, 30, 99, 0.6);
+        }
+
+        .flashes {
+            list-style: none;
+            background-color: rgba(211, 47, 47, 0.2);
+            color: #ff6b6b;
+            padding: 1.2rem;
+            border-radius: var(--border-radius);
+            margin-bottom: 2rem;
+            animation: shake 0.6s cubic-bezier(.36,.07,.19,.97) both;
+            border-left: 4px solid #ff6b6b;
+        }
+
+        @keyframes shake {
+            0%, 100% {transform: translateX(0);}
+            20%, 60% {transform: translateX(-8px);}
+            40%, 80% {transform: translateX(8px);}
+        }
+        
+        .social-login {
+            display: flex;
+            justify-content: space-between;
+            margin: 1.5rem 0 2rem;
+        }
+        
+        .social-btn {
+            flex: 1;
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .social-btn:first-child {
+            margin-right: 1rem;
+            background-color: rgba(66, 103, 178, 0.9);
+            color: white;
+        }
+        
+        .social-btn:last-child {
+            margin-left: 1rem;
+            background-color: rgba(219, 68, 55, 0.9);
+            color: white;
+        }
+        
+        .social-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .social-btn:after {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: -100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .social-btn:hover:after {
+            left: 100%;
+        }
+        
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 2rem 0;
+        }
+        
+        .divider-line {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(176, 176, 192, 0.3), transparent);
+        }
+        
+        .divider-text {
+            padding: 0 1.5rem;
+            color: #b0b0c0;
+            font-size: 1rem;
+            font-weight: 300;
+        }
+        
+        .floating-particle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            pointer-events: none;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+        }
+
+        footer {
+            color: white;
+            font-size: 0.95rem;
+            text-align: center;
+            margin-top: 4rem;
+            width: 100%;
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
+
+        footer:hover {
+            opacity: 1;
+        }
+
+        footer p {
+            color: var(--light);
+            text-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Glow effect on form fields */
+        .form-group::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            opacity: 0;
+            border-radius: var(--border-radius);
+            box-shadow: 0 0 15px rgba(233, 30, 99, 0.5);
+            transition: opacity 0.3s ease;
+            z-index: -1;
+        }
+
+        .form-group:focus-within::after {
+            opacity: 1;
+        }
+
+        /* Background plasma effect */
+        .plasma {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            opacity: 0.4;
+            filter: blur(80px);
+        }
+
+        .plasma-blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+        }
+
+        .blob-1 {
+            top: 20%;
+            left: 15%;
+            width: 400px;
+            height: 400px;
+            background: rgba(156, 39, 176, 0.2);
+            animation: blob-float 15s ease-in-out infinite alternate;
+        }
+
+        .blob-2 {
+            bottom: 20%;
+            right: 15%;
+            width: 350px;
+            height: 350px;
+            background: rgba(233, 30, 99, 0.2);
+            animation: blob-float 18s ease-in-out infinite alternate-reverse;
+        }
+
+        .blob-3 {
+            top: 50%;
+            left: 50%;
+            width: 500px;
+            height: 500px;
+            background: rgba(63, 81, 181, 0.15);
+            animation: blob-float 20s ease-in-out infinite alternate;
+        }
+
+        @keyframes blob-float {
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+            50% {
+                transform: translate(150px, -100px) scale(1.2);
+            }
+            100% {
+                transform: translate(-100px, 100px) scale(0.8);
+            }
+        }
+
+        @media (max-width: 992px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .logo-container {
+                margin-right: 0;
+                margin-bottom: 3rem;
+            }
+
+            .form-container {
+                max-width: 90%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 2rem;
+            }
+
+            header h1 {
+                font-size: 2.8rem;
+            }
+
+            .form-container {
+                padding: 2rem;
+            }
+            
+            .logo {
+                font-size: 7rem;
+            }
+            
+            .tagline {
+                font-size: 1.2rem;
+                max-width: 280px;
+            }
+
+            .blob-1, .blob-2, .blob-3 {
+                transform: scale(0.7);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="cosmic-background" id="stars"></div>
+    
+    <div class="plasma">
+        <div class="plasma-blob blob-1"></div>
+        <div class="plasma-blob blob-2"></div>
+        <div class="plasma-blob blob-3"></div>
+    </div>
+
+    <header>
+        <h1>BloodDetect System</h1>
+    </header>
+
+    <div class="container">
+        <div class="logo-container">
+            <i class="fas fa-tint logo"></i>
+            <div class="tagline">Advanced blood analysis system for healthcare professionals</div>
+            
+            <div class="dna-helix">
+                <div class="strand strand-1"></div>
+                <div class="strand strand-2"></div>
+            </div>
+        </div>
+
+        <div class="form-container" id="loginForm">
+            <div class="glass-effect"></div>
+            <div class="text-center">
+                <i class="fas fa-tint app-icon"></i>
+                <h2>Welcome Back</h2>
+                <p>Sign in to access your dashboard</p>
+            </div>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            <ul class="flashes">
+                {% for category, message in messages %}
+                <li class="{{ category }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            {% endwith %}
+
+            <div class="social-login">
+                <button class="social-btn">
+                    <i class="fab fa-facebook-f"></i>
+                </button>
+                <button class="social-btn">
+                    <i class="fab fa-google"></i>
+                </button>
+            </div>
+
+            <div class="divider">
+                <div class="divider-line"></div>
+                <div class="divider-text">or sign in with</div>
+                <div class="divider-line"></div>
+            </div>
+
+            <form action="/login" method="post">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" class="form-control" placeholder="Enter your username" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" class="form-control" placeholder="Enter your password" required>
+                    <i class="fas fa-eye password-toggle" id="togglePassword"></i>
+                </div>
+
+                <button type="submit" class="btn">
+                    <i class="fas fa-sign-in-alt"></i> Access System
+                </button>
+            </form>
+
+            <div class="sign-up-link">
+                <p>Don't have an account? <a href="/signup">Create One</a></p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 BloodDetect System. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Toggle password visibility
+        document.getElementById('togglePassword').addEventListener('click', function() {
+            const passwordField = document.getElementById('password');
+            const toggleIcon = this;
+            
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+                toggleIcon.classList.remove('fa-eye');
+                toggleIcon.classList.add('fa-eye-slash');
+            } else {
+                passwordField.type = "password";
+                toggleIcon.classList.remove('fa-eye-slash');
+                toggleIcon.classList.add('fa-eye');
+            }
+        });
+
+        // Form input focus effects
+        const inputs = document.querySelectorAll('.form-control');
+        inputs.forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentElement.querySelector('label').style.color = 'var(--primary)';
+                this.parentElement.querySelector('label').style.textShadow = '0 0 5px rgba(233, 30, 99, 0.5)';
+            });
+            
+            input.addEventListener('blur', function() {
+                this.parentElement.querySelector('label').style.color = 'var(--light)';
+                this.parentElement.querySelector('label').style.textShadow = 'none';
+            });
+        });
+
+        // Create stars
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            const starCount = 150;
+            
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                
+                // Random position
+                const xPos = Math.random() * 100;
+                const yPos = Math.random() * 100;
+                
+                star.style.left = `${xPos}%`;
+                star.style.top = `${yPos}%`;
+                
+                // Random size
+                const size = Math.random() * 3 + 1;
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                
+                // Random twinkle speed
+                const duration = Math.random() * 3 + 2;
+                star.style.setProperty('--duration', `${duration}s`);
+                
+                starsContainer.appendChild(star);
+            }
+        }
+        
+        // Create floating particles
+        function createParticles() {
+            const numParticles = 25;
+            
+            for (let i = 0; i < numParticles; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('floating-particle');
+                
+                // Random position
+                const xPos = Math.random() * 100;
+                const yPos = Math.random() * 100;
+                
+                particle.style.left = `${xPos}%`;
+                particle.style.top = `${yPos}%`;
+                
+                // Random size
+                const size = Math.random() * 6 + 2;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                // Random color tint
+                const hue = Math.random() * 40 + 320; // Pink to purple range
+                particle.style.backgroundColor = `hsla(${hue}, 100%, 70%, ${Math.random() * 0.5 + 0.3})`;
+                particle.style.boxShadow = `0 0 ${Math.random() * 10 + 5}px hsla(${hue}, 100%, 70%, 0.8)`;
+                
+                document.body.appendChild(particle);
+                
+                // Random movement
+                moveParticle(particle);
+            }
+        }
+        
+        function moveParticle(particle) {
+            const xMove = Math.random() * 15 - 7.5;
+            const yMove = Math.random() * 15 - 7.5;
+            const duration = Math.random() * (10 - 5) + 5;
+            
+            particle.style.transition = `transform ${duration}s cubic-bezier(0.2, 0.8, 0.2, 1)`;
+            
+            setTimeout(() => {
+                particle.style.transform = `translate(${xMove}vw, ${yMove}vh)`;
+                
+                // Continue moving
+                setTimeout(() => moveParticle(particle), duration * 1000);
+            }, 100);
+        }
+        
+        // Initialize particles and stars
+        createStars();
+        createParticles();
+        
+        // Button ripple effect
+        document.querySelector('.btn').addEventListener('mousedown', function(e) {
+            const btn = this;
+            const ripple = document.createElement('span');
+            const rect = btn.getBoundingClientRect();
+            
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            ripple.style.cssText = `
+                position: absolute;
+                background: rgba(255, 255, 255, 0.4);
+                border-radius: 50%;
+                pointer-events: none;
+                width: 0;
+                height: 0;
+                left: ${x}px;
+                top: ${y}px;
+                transform: translate(-50%, -50%);
+                animation: ripple 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+            `;
+            
+            btn.appendChild(ripple);
+            
+            setTimeout(() => {
+                ripple.remove();
+            }, 800);
+        });
+    </script>    
+</body>
+</html>

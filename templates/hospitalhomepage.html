@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Welcome | FutureMed</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap');
+    
+    :root {
+      --primary-red: #e11d48;
+      --primary-blue: #0ea5e9;
+      --accent-purple: #8b5cf6;
+      --accent-pink: #ec4899;
+      --dark-bg: #0f0f23;
+      --darker-bg: #070720;
+      --card-bg: rgba(15, 15, 35, 0.8);
+      --glass-bg: rgba(255, 255, 255, 0.03);
+      --glass-border: rgba(255, 255, 255, 0.08);
+      --text-primary: #f8fafc;
+      --text-secondary: #cbd5e1;
+      --text-muted: #94a3b8;
+      --gradient-primary: linear-gradient(135deg, #e11d48, #8b5cf6);
+      --gradient-secondary: linear-gradient(135deg, #0ea5e9, #ec4899);
+      --gradient-bg: linear-gradient(135deg, #0f0f23 0%, #1e1b4b 50%, #0f0f23 100%);
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--gradient-bg);
+      color: var(--text-primary);
+      line-height: 1.6;
+      overflow-x: hidden;
+      position: relative;
+      padding-top: 50px;
+    }
+
+    /* Animated background particles */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 20% 50%, rgba(225, 29, 72, 0.1) 0%, transparent 50%),
+                  radial-gradient(circle at 80% 20%, rgba(14, 165, 233, 0.1) 0%, transparent 50%),
+                  radial-gradient(circle at 40% 80%, rgba(139, 92, 246, 0.1) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: -1;
+      animation: backgroundShift 20s ease-in-out infinite;
+    }
+
+    @keyframes backgroundShift {
+      0%, 100% { opacity: 1; }
+      33% { opacity: 0.8; }
+      66% { opacity: 0.6; }
+    }
+
+    /* Header Styles */
+    #header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      background: rgba(15, 15, 35, 0.9);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--glass-border);
+      padding: 1rem 0;
+      transition: all 0.3s ease;
+    }
+
+    .header-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 2.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+    }
+
+    .logo-icon svg {
+      animation: swaySVG 2.5s ease-in-out infinite;
+      transition: filter 0.3s, animation 0.3s;
+    }
+    @keyframes swaySVG {
+      0% { transform: rotate(180deg); }
+      20% { transform: rotate(192deg); }
+      50% { transform: rotate(168deg); }
+      80% { transform: rotate(192deg); }
+      100% { transform: rotate(180deg); }
+    }
+    .logo-icon:hover svg {
+      animation: swaySVGHover 1.5s ease-in-out infinite;
+      filter: drop-shadow(0 0 12px #ff3b6ecc);
+    }
+    @keyframes swaySVGHover {
+      0% { transform: rotate(180deg); }
+      20% { transform: rotate(195deg); }
+      50% { transform: rotate(165deg); }
+      80% { transform: rotate(195deg); }
+      100% { transform: rotate(180deg); }
+    }
+
+    .logo {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.8rem;
+      font-weight: 600;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      position: relative;
+      display: inline-block;
+    }
+
+    .logo::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -6px;
+      width: 100%;
+      height: 3px;
+      background: var(--gradient-primary);
+      border-radius: 2px;
+      animation: logoUnderline 2s ease-out forwards;
+    }
+
+    @keyframes logoUnderline {
+      to { transform: scaleX(1); }
+    }
+
+    .nav-container {
+      display: flex;
+      align-items: center;
+      gap: 2.2rem;
+    }
+
+    .main-nav {
+      display: flex;
+      gap: 1.1rem;
+      background: none;
+      box-shadow: none;
+    }
+
+    .nav-item {
+      position: relative;
+    }
+
+    .nav-link {
+      color: var(--text-primary);
+      font-weight: 500;
+      padding: 0.7rem 1.2rem;
+      border-radius: 8px;
+      background: transparent;
+      transition: color 0.2s, background 0.2s;
+      text-decoration: none;
+      position: relative;
+      overflow: visible;
+      display: flex;
+      align-items: center;
+    }
+    .nav-link.active,
+    .nav-link:hover {
+      color: #fff;
+    }
+    .nav-link.active::after,
+    .nav-link:hover::after {
+      content: '';
+      display: block;
+      position: absolute;
+      left: 0;
+      bottom: -4px;
+      width: 100%;
+      height: 3px;
+      background: var(--gradient-primary);
+      border-radius: 2px;
+      transition: width 0.3s;
+    }
+    .nav-link::after {
+      content: '';
+      display: block;
+      position: absolute;
+      left: 0;
+      bottom: -4px;
+      width: 0;
+      height: 3px;
+      background: var(--gradient-primary);
+      border-radius: 2px;
+      transition: width 0.3s;
+    }
+
+    .btn-primary {
+      background: var(--gradient-primary);
+      color: white;
+      font-weight: 600;
+      padding: 0.8rem 2rem;
+      border-radius: 12px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .btn-primary:hover {
+      filter: brightness(1.1);
+      transform: translateY(-2px) scale(1.03);
+    }
+
+    .mobile-menu-button {
+      display: none;
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 1.7rem;
+      cursor: pointer;
+      margin-left: 1.5rem;
+    }
+    @media (max-width: 900px) {
+      .main-nav {
+        display: none;
+      }
+      .mobile-menu-button {
+        display: block;
+      }
+      .nav-container {
+        gap: 0.5rem;
+      }
+    }
+
+    /* Hero Section */
+    .hero-section {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4rem 6rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 4rem;
+      max-width: 1400px;
+      width: 100%;
+    }
+
+    .hero-content {
+      flex: 1;
+      max-width: 600px;
+      animation: heroFadeIn 1s ease-out;
+    }
+
+    @keyframes heroFadeIn {
+      from { 
+        opacity: 0; 
+        transform: translateY(30px) scale(0.95); 
+      }
+      to { 
+        opacity: 1; 
+        transform: translateY(0) scale(1); 
+      }
+    }
+
+    .hero-subtitle {
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--text-primary);
+      border-radius: 2rem;
+      padding: 0.4rem 1.2rem;
+      font-weight: 600;
+      font-size: 1rem;
+      display: inline-block;
+      margin-bottom: 1.2rem;
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--glass-border);
+    }
+
+    .hero-title {
+      font-size: 3.5rem;
+      line-height: 1.2;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, var(--text-primary), var(--primary-blue), var(--accent-purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: textShimmer 3s ease-in-out infinite;
+    }
+
+    @keyframes textShimmer {
+      0%, 100% { filter: brightness(1); }
+      50% { filter: brightness(1.2); }
+    }
+
+    .hero-description {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      color: var(--text-secondary);
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 3rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 1rem 2rem;
+      border-radius: 8px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--text-primary);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(10px);
+    }
+
+    .btn-outline:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-2px);
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 3rem;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-value {
+      font-size: 2rem;
+      font-weight: 700;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+
+    .hero-image {
+      flex: 1;
+      position: relative;
+      max-width: 500px;
+    }
+
+    .hero-svg-container {
+      position: relative;
+      z-index: 1;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(180deg); }
+    }
+
+    /* Features Section */
+    .features-section {
+      padding: 6rem;
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: 24px;
+      margin: 4rem auto;
+      max-width: 1400px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .features-section::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: conic-gradient(from 0deg, transparent, rgba(225, 29, 72, 0.1), transparent, rgba(14, 165, 233, 0.1), transparent);
+      animation: rotate 20s linear infinite;
+      z-index: -1;
+    }
+
+    @keyframes rotate {
+      to { transform: rotate(360deg); }
+    }
+
+    .section-title-container {
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto 4rem;
+    }
+
+    .section-subtitle {
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--text-primary);
+      border-radius: 2rem;
+      padding: 0.4rem 1.2rem;
+      font-weight: 600;
+      font-size: 1rem;
+      display: inline-block;
+      margin-bottom: 1.2rem;
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--glass-border);
+    }
+
+    .section-title {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .section-description {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      color: var(--text-secondary);
+    }
+
+    /* Chat Widget Styles */
+    .chat-toggle {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 60px;
+      height: 60px;
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: 50%;
+      cursor: pointer;
+      z-index: 1000;
+      overflow: hidden;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .chat-toggle:hover {
+      transform: translateY(-3px) scale(1.1);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    .chat-toggle::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--gradient-primary);
+      opacity: 0.1;
+      transition: opacity 0.3s ease;
+    }
+
+    .chat-toggle:hover::before {
+      opacity: 0.2;
+    }
+
+    .chat-icon {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .chat-icon i {
+      font-size: 24px;
+      color: var(--text-primary);
+      z-index: 1;
+    }
+
+    .chat-widget {
+      position: fixed;
+      bottom: 100px;
+      right: 30px;
+      width: 380px;
+      height: 500px;
+      background: #23243a;
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      display: flex;
+      flex-direction: column;
+      z-index: 999;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(20px) scale(0.95);
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .chat-widget.visible {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0) scale(1);
+    }
+
+    .chat-header {
+      padding: 20px;
+      background: #23243a;
+      border-bottom: 1px solid var(--glass-border);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .chat-header i {
+      color: var(--primary-red);
+      font-size: 20px;
+    }
+
+    .chat-header h3 {
+      color: var(--text-primary);
+      font-size: 1.1rem;
+      font-weight: 500;
+      margin: 0;
+    }
+
+    .chat-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      background: #23243a;
+    }
+
+    .message {
+      max-width: 85%;
+      padding: 12px 16px;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      line-height: 1.5;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .bot-message {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-secondary);
+      border: 1px solid var(--glass-border);
+      align-self: flex-start;
+    }
+
+    .user-message {
+      background: var(--gradient-primary);
+      color: var(--text-primary);
+      align-self: flex-end;
+    }
+
+    .chat-input {
+      padding: 20px;
+      background: #23243a;
+      border-top: 1px solid var(--glass-border);
+      display: flex;
+      gap: 12px;
+    }
+
+    .chat-input input {
+      flex: 1;
+      background: #23243a;
+      border: 1px solid var(--glass-border);
+      border-radius: 8px;
+      padding: 12px 16px;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+    }
+
+    .chat-input input:focus {
+      outline: none;
+      border-color: var(--primary-red);
+    }
+
+    .chat-input button {
+      background: var(--gradient-primary);
+      border: none;
+      border-radius: 8px;
+      padding: 12px 20px;
+      color: var(--text-primary);
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .chat-input button:hover {
+      transform: translateY(-2px);
+    }
+
+    @media (max-width: 1024px) {
+      .hero-container {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .hero-content {
+        max-width: 100%;
+      }
+
+      .hero-buttons {
+        justify-content: center;
+      }
+
+      .hero-stats {
+        justify-content: center;
+      }
+
+      .hero-image {
+        max-width: 100%;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .header-container {
+        padding: 0 1.5rem;
+      }
+
+      .nav-container {
+        display: none;
+      }
+
+      .mobile-menu-button {
+        display: block;
+      }
+
+      .hero-section {
+        padding: 2rem;
+      }
+
+      .hero-title {
+        font-size: 2.5rem;
+      }
+
+      .features-section {
+        padding: 3rem 2rem;
+      }
+    }
+
+    .thinking {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-left: 2px;
+      height: 1.5em;
+      justify-content: flex-start;
+    }
+    .thinking span {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      background: #fff;
+      border-radius: 50%;
+      opacity: 0.5;
+      animation: thinkingBounce 1.2s infinite;
+    }
+    .thinking span:nth-child(2) { animation-delay: 0.2s; }
+    .thinking span:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes thinkingBounce {
+      0%, 80%, 100% { opacity: 0.5; transform: translateY(0); }
+      40% { opacity: 1; transform: translateY(-6px); }
+    }
+  </style>
+</head>
+<body>
+  <div class="particles">
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+  </div>
+
+  <header id="header">
+    <div class="header-container">
+      <div class="logo-container">
+        <span class="logo-icon" style="margin-right: 0.5rem; display: flex; align-items: center;">
+          <svg width="32" height="32" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M32 58s-22-13.333-22-30A14 14 0 0132 14a14 14 0 0122 14c0 16.667-22 30-22 30z" fill="#ff003c" stroke="#d32f2f" stroke-width="2"/>
+            <polyline points="18,34 26,34 30,26 36,46 40,38 46,38" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+        <a href="{{ url_for('home') }}" class="logo">BloodDetect</a>
+      </div>
+
+      <button class="mobile-menu-button" aria-label="Toggle menu">
+        <i class="fas fa-bars"></i>
+      </button>
+
+      <div class="mobile-overlay"></div>
+
+      <div class="nav-container">
+        <nav class="main-nav">
+          <div class="nav-item">
+            <a href="{{ url_for('home') }}" class="nav-link active">
+              <i class="fas fa-home nav-icon"></i>Home
+            </a>
+          </div>
+          <div class="nav-item">
+            <a href="{{ url_for('about') }}" class="nav-link">
+              <i class="fas fa-info-circle nav-icon"></i>About
+            </a>
+          </div>
+          <div class="nav-item">
+            <a href="{{ url_for('team') }}" class="nav-link">
+              <i class="fas fa-users nav-icon"></i>Team
+            </a>
+          </div>
+          <div class="nav-item">
+            <a href="{{ url_for('login') }}" class="nav-link">
+              <i class="fas fa-sign-in-alt nav-icon"></i>Predictor
+            </a>
+          </div>
+        </nav>
+
+        <a href="{{ url_for('predict_blood_group') }}" class="btn btn-primary">
+          Get Started
+          <i class="fas fa-arrow-right btn-icon"></i>
+        </a>
+      </div>
+    </div>
+  </header>
+  
+  <main>
+    <section class="hero-section">
+      <div class="hero-container">
+        <div class="hero-content">
+          <div class="hero-subtitle">
+            <i class="fas fa-check-circle"></i> Blood Group Detection
+          </div>
+          <h1 class="hero-title">Transform Fingerprints into Blood Group Insights</h1>
+          <p class="hero-description">Experience the future of non-invasive blood group detection. Our AI-powered platform analyzes fingerprint patterns to predict blood types with remarkable accuracy.</p>
+          
+          <div class="hero-buttons">
+            <a href="{{ url_for('predict_blood_group') }}" class="btn btn-primary">
+              Start Detection
+              <i class="fas fa-rocket"></i>
+            </a>
+            <a href="{{ url_for('about') }}" class="btn btn-outline">
+              <i class="fas fa-info-circle"></i> Learn More
+            </a>
+          </div>
+
+          <div class="hero-stats">
+            <div class="stat-item">
+              <div class="stat-value">-</div>
+              <div class="stat-label">Detection Accuracy</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-value">-</div>
+              <div class="stat-label">Active Users</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-value">8+</div>
+              <div class="stat-label">Blood Types</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-image">
+          <div class="hero-svg-container">
+            <svg width="400" height="350" viewBox="0 0 400 350" xmlns="http://www.w3.org/2000/svg" class="animated-hand">
+              <!-- Background circles -->
+              <circle cx="200" cy="180" r="150" fill="#FFEBEE" />
+              <circle cx="200" cy="180" r="120" fill="#FFCDD2" opacity="0.7" />
+
+              <!-- Blood drop shape -->
+              <path d="M200,100 C250,100 280,150 280,200 C280,250 240,300 200,320 C160,300 120,250 120,200 C120,150 150,100 200,100 Z" 
+                    fill="#FFFFFF" 
+                    stroke="#D32F2F" 
+                    stroke-width="3"/>
+
+              <!-- Blood cells -->
+              <circle cx="180" cy="180" r="15" fill="#EF5350" opacity="0.8" />
+              <circle cx="220" cy="200" r="12" fill="#E53935" opacity="0.8" />
+              <circle cx="200" cy="220" r="18" fill="#C62828" opacity="0.8" />
+
+              <!-- Connection lines -->
+              <path d="M180,180 L200,220 L220,200" stroke="#D32F2F" stroke-width="2" fill="none" />
+              <path d="M200,220 L200,260" stroke="#D32F2F" stroke-width="2" fill="none" stroke-dasharray="4 2" />
+
+              <!-- Blood type indicators -->
+              <text x="150" y="280" fill="#D32F2F" font-family="monospace" font-size="8">A+</text>
+              <text x="190" y="290" fill="#D32F2F" font-family="monospace" font-size="8">B-</text>
+              <text x="230" y="280" fill="#D32F2F" font-family="monospace" font-size="8">O+</text>
+
+              <!-- Analysis overlay -->
+              <rect x="160" y="160" width="120" height="80" fill="none" stroke="#EF5350" stroke-width="1" stroke-dasharray="3 2" rx="10" ry="10" />
+
+              <!-- Scan line animation -->
+              <line x1="160" y1="190" x2="280" y2="190" stroke="#D32F2F" stroke-width="1.5" opacity="0.7">
+                <animate attributeName="y1" values="160;240;160" dur="3s" repeatCount="indefinite" />
+                <animate attributeName="y2" values="160;240;160" dur="3s" repeatCount="indefinite" />
+                <animate attributeName="opacity" values="0.2;0.8;0.2" dur="3s" repeatCount="indefinite" />
+              </line>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="features-section">
+      <div class="section-title-container">
+        <div class="section-subtitle">Key Features</div>
+        <h2 class="section-title">Everything You Need For Blood Group Detection</h2>
+        <p class="section-description">Our platform offers powerful tools to help you detect, analyze, and understand blood types through fingerprint patterns.</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- DNA-themed Chat Toggle -->
+  <div class="chat-toggle" id="chatToggle">
+    <div class="chat-icon">
+      <i class="fas fa-robot"></i>
+    </div>
+  </div>
+
+  <!-- Medical Chat Interface -->
+  <div class="chat-widget" id="chatWidget">
+    <div class="chat-header">
+      <i class="fas fa-dna"></i>
+      <h3>AI Medical Assistant</h3>
+    </div>
+    <div class="chat-messages" id="chatMessages">
+      <div class="message bot-message">
+        Hello! I'm your AI medical assistant. How can I help you with blood group detection today?
+      </div>
+    </div>
+    <form class="chat-input" onsubmit="event.preventDefault(); sendMessage();">
+      <input 
+        type="text" 
+        id="messageInput" 
+        placeholder="Type your message..." 
+        autocomplete="off"
+        required
+      >
+      <button type="submit" id="sendButton">Send</button>
+    </form>
+  </div>
+
+  <script>
+    // Mobile menu functionality
+    const mobileMenuButton = document.querySelector('.mobile-menu-button');
+    const navContainer = document.querySelector('.nav-container');
+    const mobileOverlay = document.querySelector('.mobile-overlay');
+
+    mobileMenuButton.addEventListener('click', () => {
+      navContainer.classList.toggle('active');
+      mobileOverlay.classList.toggle('active');
+    });
+
+    mobileOverlay.addEventListener('click', () => {
+      navContainer.classList.remove('active');
+      mobileOverlay.classList.remove('active');
+    });
+
+    // Chat functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      const chatWidget = document.getElementById('chatWidget');
+      const chatToggle = document.getElementById('chatToggle');
+      const chatMessages = document.getElementById('chatMessages');
+      const messageInput = document.getElementById('messageInput');
+      const sendButton = document.getElementById('sendButton');
+
+      // Toggle chat visibility
+      chatToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        chatWidget.classList.toggle('visible');
+        chatToggle.classList.toggle('active');
+        if (chatWidget.classList.contains('visible')) {
+          setTimeout(() => {
+            messageInput.focus();
+          }, 300);
+        }
+      });
+
+      // Send message function
+      async function sendMessage() {
+        const message = messageInput.value.trim();
+        if (!message) return;
+
+        // Add user message
+        const userMsg = document.createElement('div');
+        userMsg.className = 'message user-message';
+        userMsg.textContent = message;
+        chatMessages.appendChild(userMsg);
+
+        // Clear input and refocus
+        messageInput.value = '';
+        messageInput.focus();
+
+        // Add thinking animation
+        const thinking = document.createElement('div');
+        thinking.className = 'thinking';
+        for (let i = 0; i < 3; i++) {
+          thinking.appendChild(document.createElement('span'));
+        }
+        chatMessages.appendChild(thinking);
+
+        // Scroll to bottom
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+
+        try {
+          // Make API call to your chat endpoint
+          const response = await fetch('/api/chat', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ 
+              message: message
+            })
+          });
+
+          // Remove thinking animation
+          chatMessages.removeChild(thinking);
+
+          if (!response.ok) {
+            throw new Error(`Server responded with status: ${response.status}`);
+          }
+
+          const data = await response.json();
+          
+          if (data.error) {
+            throw new Error(data.error);
+          }
+
+          // Add bot response
+          const botMsg = document.createElement('div');
+          botMsg.className = 'message bot-message';
+          botMsg.textContent = data.response;
+          chatMessages.appendChild(botMsg);
+          
+        } catch (error) {
+          console.error('Error:', error);
+          
+          // Remove thinking animation if it exists
+          if (thinking.parentNode === chatMessages) {
+            chatMessages.removeChild(thinking);
+          }
+
+          // Show error message
+          const errorMsg = document.createElement('div');
+          errorMsg.className = 'message bot-message error';
+          errorMsg.innerHTML = `
+            <i class="fas fa-exclamation-circle"></i>
+            ${error.message || 'Sorry, I encountered an error. Please try again.'}
+          `;
+          chatMessages.appendChild(errorMsg);
+        }
+
+        // Scroll to bottom
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+      }
+
+      // Make sendMessage function available globally
+      window.sendMessage = sendMessage;
+
+      // Handle Enter key press
+      messageInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          sendMessage();
+        }
+      });
+
+      // Handle button click
+      sendButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        sendMessage();
+      });
+
+      // Prevent chat widget close when clicking inside
+      chatWidget.addEventListener('click', (e) => {
+        e.stopPropagation();
+      });
+
+      // Close chat when clicking outside
+      document.addEventListener('click', (e) => {
+        if (!chatWidget.contains(e.target) && !chatToggle.contains(e.target)) {
+          chatWidget.classList.remove('visible');
+          chatToggle.classList.remove('active');
+        }
+      });
+
+      // Function to scroll to bottom of messages
+      function scrollToBottom() {
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+      }
+
+      // Scroll to bottom when new messages are added
+      const observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          if (mutation.addedNodes.length) {
+            scrollToBottom();
+          }
+        });
+      });
+
+      observer.observe(chatMessages, { childList: true, subtree: true });
+
+      // Initial scroll to bottom
+      scrollToBottom();
+    });
+  </script>
+</body>
+</html> 

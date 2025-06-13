@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blood Group Prediction Result</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+        :root {
+            --primary: #ff1744;
+            --primary-light: #ff5983;
+            --primary-dark: #d50000;
+            --accent: #00e5ff;
+            --accent-dark: #0091ea;
+            --purple: #e91e63;
+            --background: #0a0a0f;
+            --surface: #1a1a2e;
+            --card: #16213e;
+            --text: #ffffff;
+            --text-muted: #94a3b8;
+            --border: rgba(255, 255, 255, 0.1);
+            --gradient-primary: linear-gradient(135deg, #ff1744, #e91e63, #9c27b0);
+            --gradient-accent: linear-gradient(135deg, #00e5ff, #18ffff, #64ffda);
+            --gradient-bg: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --glass: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            --shadow-colored: 0 8px 32px rgba(255, 23, 68, 0.3);
+            --neon-glow: 0 0 20px rgba(255, 23, 68, 0.5);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--background);
+            min-height: 100vh;
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Epic Animated Background */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(255, 23, 68, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(0, 229, 255, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(156, 39, 176, 0.1) 0%, transparent 50%);
+            animation: bgShift 8s ease-in-out infinite;
+        }
+
+        @keyframes bgShift {
+            0%, 100% { 
+                background: 
+                    radial-gradient(circle at 20% 80%, rgba(255, 23, 68, 0.15) 0%, transparent 50%),
+                    radial-gradient(circle at 80% 20%, rgba(0, 229, 255, 0.15) 0%, transparent 50%),
+                    radial-gradient(circle at 40% 40%, rgba(156, 39, 176, 0.1) 0%, transparent 50%);
+            }
+            50% { 
+                background: 
+                    radial-gradient(circle at 80% 20%, rgba(255, 23, 68, 0.2) 0%, transparent 50%),
+                    radial-gradient(circle at 20% 80%, rgba(0, 229, 255, 0.2) 0%, transparent 50%),
+                    radial-gradient(circle at 60% 60%, rgba(156, 39, 176, 0.15) 0%, transparent 50%);
+            }
+        }
+
+        /* Floating Geometric Shapes */
+        .geometric-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(45deg, rgba(255, 23, 68, 0.1), rgba(0, 229, 255, 0.1));
+            animation: floatShapes 15s infinite ease-in-out;
+        }
+
+        .shape:nth-child(1) {
+            width: 100px;
+            height: 100px;
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+            animation-duration: 20s;
+        }
+
+        .shape:nth-child(2) {
+            width: 150px;
+            height: 150px;
+            top: 20%;
+            right: 15%;
+            animation-delay: 2s;
+            animation-duration: 18s;
+            border-radius: 20px;
+        }
+
+        .shape:nth-child(3) {
+            width: 80px;
+            height: 80px;
+            bottom: 30%;
+            left: 20%;
+            animation-delay: 4s;
+            animation-duration: 22s;
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+            border-radius: 0;
+        }
+
+        .shape:nth-child(4) {
+            width: 120px;
+            height: 120px;
+            bottom: 20%;
+            right: 25%;
+            animation-delay: 6s;
+            animation-duration: 16s;
+            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+        }
+
+        .shape:nth-child(5) {
+            width: 90px;
+            height: 90px;
+            top: 50%;
+            left: 50%;
+            animation-delay: 8s;
+            animation-duration: 24s;
+            clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+            border-radius: 0;
+        }
+
+        @keyframes floatShapes {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg) scale(1);
+                opacity: 0.3;
+            }
+            25% {
+                transform: translateY(-30px) rotate(90deg) scale(1.1);
+                opacity: 0.6;
+            }
+            50% {
+                transform: translateY(20px) rotate(180deg) scale(0.9);
+                opacity: 0.4;
+            }
+            75% {
+                transform: translateY(-40px) rotate(270deg) scale(1.2);
+                opacity: 0.7;
+            }
+        }
+
+        /* Dynamic Grid Pattern */
+        .grid-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(255, 23, 68, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 23, 68, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: -3;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        /* Header with Glassmorphism */
+        header {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(25px);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 2rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        }
+
+        header h1 {
+            text-align: center;
+            font-size: 2.8rem;
+            font-weight: 800;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            filter: drop-shadow(0 0 10px rgba(255, 23, 68, 0.3));
+        }
+
+        .blood-icon {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: iconFloat 3s ease-in-out infinite;
+            filter: drop-shadow(0 0 15px rgba(255, 23, 68, 0.5));
+        }
+
+        @keyframes iconFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-5px) rotate(10deg); }
+        }
+
+        /* Enhanced Logout Button */
+        .logout {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            z-index: 101;
+        }
+
+        .logout a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 600;
+            padding: 1rem 2rem;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 25px;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .logout a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-accent);
+            transition: left 0.5s;
+            z-index: -1;
+        }
+
+        .logout a:hover::before {
+            left: 0;
+        }
+
+        .logout a:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 229, 255, 0.3);
+            color: var(--background);
+        }
+
+        /* Epic Main Container */
+        .result-container {
+            max-width: 550px;
+            margin: 4rem auto;
+            border-radius: 30px;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(30px);
+            border: 1px solid var(--glass-border);
+            box-shadow: 
+                0 20px 60px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            animation: containerEntry 1s ease-out;
+            position: relative;
+        }
+
+        .result-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--gradient-primary);
+            animation: progressGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes progressGlow {
+            0%, 100% { opacity: 0.5; transform: scaleX(0.5); }
+            50% { opacity: 1; transform: scaleX(1); }
+        }
+
+        @keyframes containerEntry {
+            from {
+                opacity: 0;
+                transform: translateY(50px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* Result Header */
+        .result-header {
+            background: linear-gradient(135deg, rgba(255, 23, 68, 0.1), rgba(156, 39, 176, 0.1));
+            padding: 2.5rem 2rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+            position: relative;
+        }
+
+        .result-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="%23ffffff" opacity="0.05"/><circle cx="75" cy="75" r="1" fill="%23ffffff" opacity="0.05"/><circle cx="50" cy="10" r="1" fill="%23ffffff" opacity="0.03"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            opacity: 0.3;
+            z-index: -1;
+        }
+
+        .result-header h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Blood Group Display - The Star */
+        .result-body {
+            padding: 4rem 2rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .blood-group-container {
+            position: relative;
+            margin-bottom: 3rem;
+            animation: dropEntry 1.2s ease-out 0.3s both;
+        }
+
+        @keyframes dropEntry {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .blood-drop {
+            width: 200px;
+            height: 202px;
+            margin: 0 auto;
+            background: var(--gradient-primary);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            position: relative;
+            box-shadow: 
+                0 20px 60px rgba(255, 23, 68, 0.4),
+                inset 0 -10px 30px rgba(0, 0, 0, 0.2);
+            animation: bloodFloat 4s ease-in-out infinite;
+            overflow: hidden;
+        }
+
+        @keyframes bloodFloat {
+            0%, 100% { 
+                transform: translateY(0) rotate(0deg);
+                box-shadow: 
+                    0 20px 60px rgba(255, 23, 68, 0.4),
+                    inset 0 -10px 30px rgba(0, 0, 0, 0.2);
+            }
+            50% { 
+                transform: translateY(-15px) rotate(2deg);
+                box-shadow: 
+                    0 30px 80px rgba(255, 23, 68, 0.6),
+                    inset 0 -10px 30px rgba(0, 0, 0, 0.2);
+            }
+        }
+
+        /* Liquid Effect Inside Blood Drop */
+        .blood-drop::before {
+            content: '';
+            position: absolute;
+            top: 30%;
+            left: 20%;
+            width: 40px;
+            height: 40px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.4) 0%, transparent 70%);
+            border-radius: 50%;
+            filter: blur(10px);
+            animation: liquidShine 3s ease-in-out infinite;
+        }
+
+        .blood-drop::after {
+            content: '';
+            position: absolute;
+            bottom: 15%;
+            right: 30%;
+            width: 60px;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 50px;
+            filter: blur(8px);
+            animation: liquidMove 4s ease-in-out infinite reverse;
+        }
+
+        @keyframes liquidShine {
+            0%, 100% { opacity: 0.4; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.2); }
+        }
+
+        @keyframes liquidMove {
+            0%, 100% { transform: translateX(0) scale(1); }
+            50% { transform: translateX(10px) scale(1.1); }
+        }
+
+        .blood-group {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: white;
+            text-shadow: 
+                0 2px 10px rgba(0, 0, 0, 0.5),
+                0 0 20px rgba(255, 255, 255, 0.3);
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            z-index: 10;
+        }
+
+        .blood-group span {
+            backdrop-filter: blur(15px);
+            padding: 0.5rem 1.2rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            animation: spanEntry 0.8s ease-out forwards;
+            transform: translateY(20px);
+            opacity: 0;
+        }
+
+        @keyframes spanEntry {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .blood-group span:hover {
+            transform: translateY(-5px) scale(1.1);
+            background: rgba(255, 255, 255, 0.25);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.2);
+        }
+
+        /* Multiple blood group animations */
+        .blood-group span:nth-child(1) { animation-delay: 0.1s; }
+        .blood-group span:nth-child(2) { animation-delay: 0.2s; }
+        .blood-group span:nth-child(3) { animation-delay: 0.3s; }
+        .blood-group span:nth-child(4) { animation-delay: 0.4s; }
+
+        /* Responsive sizing */
+        .blood-group.multiple span { font-size: 2.8rem; }
+        .blood-group.many span { font-size: 2rem; }
+
+        /* Futuristic Button */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.25rem 2.5rem;
+            background: var(--gradient-accent);
+            color: var(--background);
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            margin-bottom: 3rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 229, 255, 0.3);
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(0, 229, 255, 0.5);
+        }
+
+        .btn i {
+            transition: transform 0.3s ease;
+        }
+
+        .btn:hover i {
+            transform: rotate(180deg);
+        }
+
+        /* Enhanced Blood Facts Card */
+        .blood-facts {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid var(--glass-border);
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+            animation: factsEntry 1s ease-out 0.6s both;
+        }
+
+        @keyframes factsEntry {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .blood-facts::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 3px;
+            background: var(--gradient-primary);
+            animation: factProgressBar 2s ease-in-out 1s forwards;
+        }
+
+        @keyframes factProgressBar {
+            to { left: 0; }
+        }
+
+        .blood-facts h3 {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .blood-facts h3 i {
+            background: var(--gradient-accent);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .blood-facts p {
+            color: var(--text-muted);
+            font-size: 1rem;
+            line-height: 1.7;
+            font-weight: 400;
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--accent);
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .result-container {
+                margin: 2rem 1rem;
+                max-width: none;
+            }
+
+            .blood-drop {
+                width: 170px;
+                height: 200px;
+            }
+
+            .blood-group {
+                font-size: 3rem;
+            }
+
+            .blood-group.multiple span { font-size: 2.3rem; }
+            .blood-group.many span { font-size: 1.8rem; }
+
+            header h1 {
+                font-size: 2.2rem;
+            }
+
+            .logout {
+                top: 1rem;
+                right: 1rem;
+            }
+
+            .logout a {
+                padding: 0.8rem 1.5rem;
+                font-size: 0.9rem;
+            }
+
+            .shape {
+                display: none; /* Hide floating shapes on mobile for performance */
+            }
+        }
+
+        /* Enhanced hover effects */
+        .result-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 
+                0 25px 70px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            transition: all 0.4s ease;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Dynamic Grid Background -->
+    <div class="grid-bg"></div>
+    
+    <!-- Animated Background -->
+    <div class="animated-bg"></div>
+
+    <!-- Floating Geometric Shapes -->
+    <div class="geometric-bg">
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+
+    <header>
+        <h1>
+            <span class="blood-icon"><i class="fas fa-tint"></i></span>
+            BloodDetect System
+        </h1>
+    </header>
+
+    <div class="logout">
+        <a href="/">
+            <i class="fas fa-sign-out-alt"></i>
+            Logout
+        </a>
+    </div>
+
+    <div class="result-container">
+        <div class="result-header">
+            <h1>Your Blood Group Result</h1>
+        </div>
+        
+        <div class="result-body">
+            <div class="blood-group-container">
+                <div class="blood-drop">
+                    <div class="blood-group" id="bloodGroupDisplay">
+                        <span>A+</span>
+                    </div>
+                </div>
+            </div>
+
+            <a href="#" class="btn" onclick="predictAnother()">
+                <i class="fas fa-sync-alt"></i>
+                Predict Another
+            </a>
+
+            <div class="blood-facts">
+                <h3>
+                    <i class="fas fa-info-circle"></i>
+                    Blood Type Facts
+                </h3>
+                <p id="blood-fact">Loading blood type information...</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Enhanced blood type facts
+        const bloodFacts = {
+            'A+': '🩸 Around 35.7% of the population has A+ blood. You can donate to A+ and AB+ recipients, making you a valuable donor! Your blood contains A antigens and Rh factor.',
+            'A-': '⭐ Only about 6.3% of the population has A- blood. You can donate to A+, A-, AB+, and AB- recipients. Your rare blood type is especially needed in emergency situations!',
+            'B+': '💫 Around 8.5% of the population has B+ blood. You can donate to B+ and AB+ recipients. Your blood contains B antigens and Rh factor.',
+            'B-': '🔥 Only about 1.5% of the population has B- blood. You can donate to B+, B-, AB+, and AB- recipients. Your rare blood is crucial for medical emergencies.',
+            'AB+': '👑 Only about 3.4% of the population has AB+ blood. You are the universal recipient - you can receive blood from any type!',
+            'AB-': '💎 AB- is the rarest blood type, found in just 0.6% of the population. You can donate to AB+ and AB- recipients.',
+            'O+': '🌟 O+ is the most common blood type, with about 37.4% of the population. You can donate to A+, B+, AB+, and O+ recipients.',
+            'O-': '👑 Around 6.6% of the population has O- blood. You are the universal donor - your blood can save anyone!'
+        };
+
+        function showBloodFacts() {
+            const bloodGroup = document.querySelector('.blood-group').textContent.trim();
+            const factElement = document.getElementById('blood-fact');
+            
+            factElement.innerHTML = '<span class="loading"></span> Analyzing your blood type...';
+            
+            setTimeout(() => {
+                factElement.textContent = bloodFacts[bloodGroup] || '🧬 Each blood type has unique characteristics and compatibility profiles. Your blood type plays a crucial role in medical treatments.';
+            }, 1500);
+        }
+
+        function adjustBloodGroupSize() {
+            const bloodGroupContainer = document.querySelector('.blood-group');
+            const spans = bloodGroupContainer.querySelectorAll('span');
+            const count = spans.length;
+
+            bloodGroupContainer.classList.remove('multiple', 'many');
+
+            if (count >= 2 && count <= 3) {
+                bloodGroupContainer.classList.add('multiple');
+            } else if (count >= 4) {
+                bloodGroupContainer.classList.add('many');
+            }
+        }
+
+        function predictAnother() {
+            const btn = document.querySelector('.btn');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<span class="loading"></span> Loading...';
+            btn.style.pointerEvents = 'none';
+            
+            setTimeout(() => {
+                window.location.href = '/predict_blood_group';
+            }, 1000);
+        }
+
+        // Add mouse parallax effect
+        document.addEventListener('mousemove', (e) => {
+            const shapes = document.querySelectorAll('.shape');
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+
+            shapes.forEach((shape, index) => {
+                const speed = (index + 1) * 0.5;
+                const xPos = (x - 0.5) * speed * 20;
+                const yPos = (y - 0.5) * speed * 20;
+                shape.style.transform += ` translate(${xPos}px, ${yPos}px)`;
+            });
+        });
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            adjustBloodGroupSize();
+            setTimeout(showBloodFacts, 800);
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Our Team - BloodDetect</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&family=Orbitron:wght@400;600;900&display=swap');
+    
+    :root {
+      --neon-red: #ff003c;
+      --neon-blue: #00f7ff;
+      --dark-bg: #0a0a0a;
+      --glass-bg: rgba(255, 255, 255, 0.08);
+      --text-dark: #333;
+      --text-light: #f8f8f8;
+      --accent: #ff5252;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background-color: var(--dark-bg);
+      color: var(--text-light);
+      background-image: 
+        radial-gradient(circle at 10% 20%, rgba(255, 0, 60, 0.2) 0%, transparent 35%),
+        radial-gradient(circle at 90% 80%, rgba(0, 247, 255, 0.2) 0%, transparent 35%);
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 2rem 6rem;
+      background: rgba(10, 10, 10, 0.8);
+      backdrop-filter: blur(15px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 5px 25px rgba(255, 0, 60, 0.3);
+      border-bottom: 1px solid rgba(255, 0, 60, 0.3);
+    }
+
+    .navbar h1 {
+      font-family: 'Orbitron', sans-serif;
+      color: #fff;
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-shadow: 
+        0 0 5px var(--neon-red),
+        0 0 15px var(--neon-red),
+        0 0 30px var(--neon-red);
+      animation: pulse 3s infinite alternate;
+    }
+
+    @keyframes pulse {
+      0% {
+        text-shadow: 0 0 5px var(--neon-red), 0 0 15px var(--neon-red);
+      }
+      100% {
+        text-shadow: 0 0 10px var(--neon-red), 0 0 30px var(--neon-red), 0 0 50px var(--neon-red);
+      }
+    }
+
+    .navbar nav {
+      display: flex;
+      align-items: center;
+    }
+
+    .navbar nav a {
+      margin: 0 1.5rem;
+      text-decoration: none;
+      color: #fff;
+      font-weight: 500;
+      position: relative;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 0.5rem 0.8rem;
+      transition: all 0.3s ease;
+      border: 1px solid transparent;
+    }
+
+    .navbar nav a.active {
+      color: var(--neon-red);
+      border: 1px solid var(--neon-red);
+      box-shadow: 0 0 10px var(--neon-red);
+      font-weight: 600;
+    }
+
+    .navbar nav a:hover {
+      color: var(--neon-red);
+      transform: translateY(-3px) scale(1.05);
+      letter-spacing: 2px;
+    }
+
+    .navbar nav a::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--neon-red);
+      z-index: -1;
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform 0.5s ease;
+      opacity: 0.2;
+    }
+
+    .navbar nav a:hover::before {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+
+    .hero-section {
+      position: relative;
+      height: 60vh;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url("{{ url_for('static', filename='4.jpg') }}") no-repeat center center;
+      background-size: cover;
+      z-index: -1;
+      filter: brightness(0.7);
+    }
+
+    .hero-particles {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      opacity: 0.5;
+      background: radial-gradient(circle, transparent 10%, #000 90%);
+    }
+
+    .hero-content {
+      text-align: center;
+      color: white;
+      z-index: 1;
+      max-width: 800px;
+      padding: 2rem;
+      border-radius: 10px;
+      background: rgba(0,0,0,0.4);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+      transform: translateY(0);
+      animation: float 3s ease-in-out infinite;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-15px);
+      }
+    }
+
+    .hero-content h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 3.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+      background: linear-gradient(90deg, #fff, var(--neon-blue));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero-content p {
+      font-size: 1.2rem;
+      line-height: 1.6;
+      max-width: 600px;
+      margin: 0 auto;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .team-section {
+      padding: 5rem 5%;
+      background: transparent;
+      position: relative;
+    }
+
+    .section-heading {
+      text-align: center;
+      margin-bottom: 3rem;
+      position: relative;
+    }
+
+    .section-heading h2 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2.5rem;
+      color: var(--neon-blue);
+      margin-bottom: 1rem;
+      position: relative;
+      display: inline-block;
+    }
+
+    .section-heading h2::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 4px;
+      background: var(--neon-red);
+      border-radius: 2px;
+      box-shadow: 0 0 10px var(--neon-red);
+    }
+
+    .section-heading p {
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 1.1rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 2.5rem;
+      margin-top: 2rem;
+    }
+
+    .team-member {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: relative;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .team-member:hover {
+      transform: translateY(-15px) scale(1.02);
+      box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+      border-color: var(--neon-blue);
+    }
+
+    .team-member::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 6px;
+      background: linear-gradient(90deg, var(--neon-red), var(--neon-blue));
+    }
+
+    .member-photo {
+      height: 180px;
+      background: linear-gradient(45deg, rgba(255, 0, 60, 0.2), rgba(0, 247, 255, 0.2));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .member-photo i {
+      font-size: 5rem;
+      color: rgba(255,255,255,0.8);
+      filter: drop-shadow(0 0 10px var(--neon-blue));
+    }
+
+    .team-info {
+      padding: 2rem;
+      text-align: center;
+      position: relative;
+    }
+
+    .team-info h3 {
+      color: var(--neon-blue);
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      font-family: 'Orbitron', sans-serif;
+    }
+
+    .team-info p {
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 0.5rem;
+      font-size: 0.95rem;
+    }
+
+    .member-role {
+      font-weight: 500;
+      color: var(--neon-red);
+      margin-bottom: 1rem;
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .social-links a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--neon-blue);
+      font-size: 1.2rem;
+      transition: all 0.3s;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .social-links a:hover {
+      background: var(--neon-blue);
+      color: var(--dark-bg);
+      transform: translateY(-3px);
+      box-shadow: 0 0 15px var(--neon-blue);
+    }
+
+    .footer {
+      padding: 4rem 5%;
+      background: linear-gradient(135deg, #333, #222);
+      color: white;
+      position: relative;
+      border-top: 1px solid rgba(255, 0, 60, 0.3);
+    }
+
+    .footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: linear-gradient(90deg, var(--neon-red), var(--neon-blue));
+      filter: blur(3px);
+    }
+
+    .footer-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 3rem;
+    }
+
+    .footer-col h3 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.3rem;
+      margin-bottom: 1.5rem;
+      position: relative;
+      padding-bottom: 0.8rem;
+    }
+
+    .footer-col h3::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 50px;
+      height: 3px;
+      background: var(--neon-blue);
+    }
+
+    .footer-col p, .footer-col a {
+      color: rgba(255, 255, 255, 0.7);
+      margin-bottom: 1rem;
+      display: block;
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+
+    .footer-col a:hover {
+      color: var(--neon-blue);
+      transform: translateX(5px);
+    }
+
+    .contact-info {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .contact-info i {
+      margin-right: 10px;
+      color: var(--neon-blue);
+    }
+
+    .copyright {
+      text-align: center;
+      padding-top: 2rem;
+      margin-top: 2rem;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .blood-particle {
+      position: absolute;
+      background: rgba(255,0,60,0.3);
+      border-radius: 50%;
+      animation: float-particle 15s infinite linear;
+      box-shadow: 0 0 10px var(--neon-red);
+    }
+
+    @keyframes float-particle {
+      0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      90% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-800px) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .navbar {
+        flex-direction: column;
+        padding: 1.5rem 2rem;
+        gap: 1.5rem;
+      }
+      
+      .navbar nav {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      
+      .navbar nav a {
+        margin: 0.5rem;
+        font-size: 0.8rem;
+      }
+      
+      .hero-content h1 {
+        font-size: 2.5rem;
+      }
+      
+      .team-grid {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 1.5rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Navbar -->
+  <header class="navbar">
+    <h1>BloodDetect</h1>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/about">About</a>
+      <a href="/team" class="active">Team</a>
+      <a href="/predictor">Predictor</a>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-bg"></div>
+    <div class="hero-particles" id="particles-js"></div>
+    <div class="hero-content">
+      <h1>Meet Our Team</h1>
+      <p>The brilliant minds behind BloodDetect revolutionizing blood disorder detection through technology and innovation</p>
+    </div>
+  </section>
+
+  <!-- Team Section -->
+  <section class="team-section">
+    <div class="section-heading">
+      <h2>Our Development Team</h2>
+      <p>Talented individuals working together to make blood disorder detection more accessible and accurate</p>
+    </div>
+    
+    <div class="team-grid">
+      <!-- Team Member 1 -->
+      <div class="team-member">
+        <div class="member-photo">
+          <i class="fas fa-user-circle"></i>
+        </div>
+        <div class="team-info">
+          <h3>Atharv Gore</h3>
+          <p class="member-role">Developer</p>
+          <p>ID: 12411277</p>
+          <p>CS-D</p>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+            <a href="#"><i class="fab fa-github"></i></a>
+            <a href="#"><i class="fas fa-envelope"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Team Member 2 -->
+      <div class="team-member">
+        <div class="member-photo">
+          <i class="fas fa-user-circle"></i>
+        </div>
+        <div class="team-info">
+          <h3>Mayank Goplani</h3>
+          <p class="member-role">Developer</p>
+          <p>ID: 12413197</p>
+          <p>CS-D</p>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+            <a href="#"><i class="fab fa-github"></i></a>
+            <a href="#"><i class="fas fa-envelope"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Team Member 3 -->
+      <div class="team-member">
+        <div class="member-photo">
+          <i class="fas fa-user-circle"></i>
+        </div>
+        <div class="team-info">
+          <h3>Dnyanraj Gore</h3>
+          <p class="member-role">Developer</p>
+          <p>ID: </p>
+          <p>CS-D</p>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+            <a href="#"><i class="fab fa-github"></i></a>
+            <a href="#"><i class="fas fa-envelope"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Team Member 4 -->
+      <div class="team-member">
+        <div class="member-photo">
+          <i class="fas fa-user-circle"></i>
+        </div>
+        <div class="team-info">
+          <h3>Shraddha Golhar</h3>
+          <p class="member-role">Developer</p>
+          <p>ID: </p>
+          <p>CS-D</p>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+            <a href="#"><i class="fab fa-github"></i></a>
+            <a href="#"><i class="fas fa-envelope"></i></a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Team Member 5 -->
+      <div class="team-member">
+        <div class="member-photo">
+          <i class="fas fa-user-circle"></i>
+        </div>
+        <div class="team-info">
+          <h3>Anushka Gore</h3>
+          <p class="member-role">Developer</p>
+          <p>ID: </p>
+          <p>CS-D</p>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+            <a href="#"><i class="fab fa-github"></i></a>
+            <a href="#"><i class="fas fa-envelope"></i></a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Team Member 6 -->
+      <div class="team-member">
+        <div class="member-photo">
+          <i class="fas fa-user-circle"></i>
+        </div>
+        <div class="team-info">
+          <h3>Gaurav Gore</h3>
+          <p class="member-role">Developer</p>
+          <p>ID: </p>
+          <p>CS-D</p>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+            <a href="#"><i class="fab fa-github"></i></a>
+            <a href="#"><i class="fas fa-envelope"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-col">
+        <h3>About BloodDetect</h3>
+        <p>BloodDetect is an innovative platform that uses AI to detect and analyze blood disorders with high accuracy, making healthcare more accessible.</p>
+      </div>
+      
+      <div class="footer-col">
+        <h3>Quick Links</h3>
+        <a href="/">Home</a>
+        <a href="/about">About Us</a>
+        <a href="/team">Our Team</a>
+        <a href="/predictor">Predictor Tool</a>
+      </div>
+      
+      <div class="footer-col">
+        <h3>Contact Us</h3>
+        <div class="contact-info">
+          <i class="fas fa-map-marker-alt"></i>
+          <p></p>
+        </div>
+        <div class="contact-info">
+          <i class="fas fa-phone"></i>
+          <p>(123) 456-7890</p>
+        </div>
+        <div class="contact-info">
+          <i class="fas fa-envelope"></i>
+          <p>info@blooddetect.com</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="copyright">
+      <p>&copy; 2025 BloodDetect System. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+  <script>
+    // Create floating blood cell particles
+    function createBloodParticles() {
+      const teamSection = document.querySelector('.team-section');
+      for (let i = 0; i < 15; i++) {
+        const particle = document.createElement('div');
+        particle.classList.add('blood-particle');
+        
+        // Random size between 10px and 30px
+        const size = Math.random() * 20 + 10;
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
+        
+        // Random position
+        particle.style.left = `${Math.random() * 100}%`;
+        particle.style.bottom = `-${size}px`;
+        
+        // Random animation duration
+        particle.style.animationDuration = `${Math.random() * 10 + 10}s`;
+        
+        // Random delay
+        particle.style.animationDelay = `${Math.random() * 5}s`;
+        
+        teamSection.appendChild(particle);
+      }
+    }
+    
+    // Initialize particles.js for hero section
+    document.addEventListener('DOMContentLoaded', function() {
+      if (typeof particlesJS !== 'undefined') {
+        particlesJS('particles-js', {
+          "particles": {
+            "number": {
+              "value": 80,
+              "density": {
+                "enable": true,
+                "value_area": 800
+              }
+            },
+            "color": {
+              "value": "#ffffff"
+            },
+            "shape": {
+              "type": "circle"
+            },
+            "opacity": {
+              "value": 0.5,
+              "random": true
+            },
+            "size": {
+              "value": 3,
+              "random": true
+            },
+            "line_linked": {
+              "enable": true,
+              "distance": 150,
+              "color": "#ffffff",
+              "opacity": 0.4,
+              "width": 1
+            },
+            "move": {
+              "enable": true,
+              "speed": 3,
+              "direction": "none",
+              "random": true,
+              "straight": false,
+              "out_mode": "out",
+              "bounce": false
+            }
+          },
+          "interactivity": {
+            "detect_on": "canvas",
+            "events": {
+              "onhover": {
+                "enable": true,
+                "mode": "grab"
+              },
+              "onclick": {
+                "enable": true,
+                "mode": "push"
+              },
+              "resize": true
+            }
+          },
+          "retina_detect": true
+        });
+      }
+      
+      createBloodParticles();
+    });
+  </script>
+</body>
+</html>

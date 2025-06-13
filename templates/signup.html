@@ -1,0 +1,853 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - BloodDetect System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #ff416c;
+            --secondary: #ff4b2b;
+            --background: #f5f6fa;
+            --light: #ffffff;
+            --dark: #333333;
+            --light-gray: #e9ecef;
+            --border-radius: 8px;
+            --max-width: 400px;
+            --padding: 1rem;
+            --font-size: 0.9rem;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--dark);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            max-width: 1100px;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 3rem;
+        }
+
+        header h1 {
+            font-size: 3rem;
+            font-weight: bold;
+            letter-spacing: 1.5px;
+        }
+
+        .form-container {
+            background-color: var(--light);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border-radius: var(--border-radius);
+            padding: var(--padding);
+            width: 100%;
+            max-width: var(--max-width);
+            transition: all 0.3s ease;
+            margin-left: 2rem;
+        }
+
+        .form-container:hover {
+            transform: scale(1.02);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .text-center {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+            text-align: left;
+            position: relative;
+        }
+
+        .form-group label {
+            font-size: 0.85rem;
+            color: var(--dark);
+            font-weight: 500;
+            display: block;
+            margin-bottom: 0.4rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.7rem;
+            font-size: var(--font-size);
+            border-radius: var(--border-radius);
+            border: 1px solid var(--light-gray);
+            background-color: var(--light);
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(255, 65, 108, 0.2);
+        }
+
+        .form-control::placeholder {
+            color: var(--dark);
+        }
+
+        .btn {
+            padding: 0.8rem 0;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+
+        .sign-in-link {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .sign-in-link a {
+            color: var(--primary);
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .sign-in-link a:hover {
+            text-decoration: underline;
+        }
+
+        footer {
+            color: white;
+            font-size: 0.9rem;
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .fa-eye:before {
+            content: "\f06e";
+            position: relative;
+            top: 11px;
+        }
+        footer p {
+            color: var(--light);
+        }
+
+        @media (max-width: 768px) {
+            header {
+                font-size: 2rem;
+                margin-right: 0;
+                text-align: center;
+                margin-bottom: 1rem;
+            }
+
+            .container {
+                flex-direction: column;
+            }
+
+            .form-container {
+                padding: 1.5rem;
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>BloodDetect System</h1>
+        </header>
+
+        <div class="form-container">
+            <div class="text-center">
+                <i class="fas fa-user-plus" style="font-size: 3rem; color: var(--primary);"></i>
+                <h2>Create Account</h2>
+            </div>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            <ul class="flashes">
+                {% for category, message in messages %}
+                <li class="{{ category }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            {% endwith %}
+
+            <form action="/signup" method="post">
+                <div class="form-group">
+                    <label for="fullname">Full Name</label>
+                    <input type="text" id="fullname" name="fullname" class="form-control" placeholder="Enter your full name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" class="form-control" placeholder="Enter your email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" class="form-control" placeholder="Choose a username" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" class="form-control" placeholder="Choose a password" required>
+                    <i class="fas fa-eye password-toggle" onclick="togglePassword('password')"></i>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirmpassword">Confirm Password</label>
+                    <input type="password" id="confirmpassword" name="confirmpassword" class="form-control" placeholder="Confirm your password" required>
+                    <i class="fas fa-eye password-toggle" onclick="togglePassword('confirmpassword')"></i>
+                </div>
+
+                <button type="submit" class="btn">
+                    <i class="fas fa-user-plus"></i> Sign Up
+                </button>
+
+                <div class="sign-in-link">
+                    <p>Already have an account? <a href="/login">Login</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function togglePassword(id) {
+            var passwordField = document.getElementById(id);
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+            } else {
+                passwordField.type = "password";
+            }
+        }
+    </script>
+</body>
+
+</html> -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - BloodDetect System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #e91e63;
+            --primary-gradient: #ff416c;
+            --secondary: #2196f3;
+            --background: #0c0c14;
+            --light: #ffffff;
+            --dark: #121212;
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --input-bg: rgba(255, 255, 255, 0.9);
+            --border-radius: 12px;
+            --card-border-radius: 20px;
+            --max-width: 450px;
+            --padding: 2rem;
+            --font-size: 1rem;
+            --box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: var(--background);
+            background-image: 
+                radial-gradient(circle at 20% 35%, rgba(233, 30, 99, 0.2) 0%, transparent 50%),
+                radial-gradient(circle at 75% 44%, rgba(33, 150, 243, 0.15) 0%, transparent 55%);
+            background-attachment: fixed;
+            color: var(--dark);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                url('/api/placeholder/1920/1080') center/cover no-repeat fixed,
+                linear-gradient(135deg, rgba(233, 30, 99, 0.7), rgba(33, 150, 243, 0.7));
+            filter: blur(8px);
+            z-index: -1;
+            opacity: 0.2;
+        }
+
+        .blood-cells {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .cell {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 65, 108, 0.8), rgba(255, 75, 43, 0.4));
+            box-shadow: 0 5px 15px rgba(255, 65, 108, 0.3);
+            opacity: 0.6;
+            animation: float 15s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) translateX(0) rotate(0deg);
+            }
+            25% {
+                transform: translateY(-20px) translateX(10px) rotate(5deg);
+            }
+            50% {
+                transform: translateY(10px) translateX(15px) rotate(10deg);
+            }
+            75% {
+                transform: translateY(-15px) translateX(-10px) rotate(-5deg);
+            }
+        }
+
+        .container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            max-width: 1200px;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-right: 3rem;
+            max-width: 500px;
+        }
+
+        header h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #ff416c, #ff4b2b);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        header p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+        }
+
+        .tagline {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            backdrop-filter: blur(10px);
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .form-container {
+            background: var(--card-bg);
+            box-shadow: var(--box-shadow);
+            border-radius: var(--card-border-radius);
+            padding: var(--padding);
+            width: 100%;
+            max-width: var(--max-width);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .form-container:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        .form-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 60%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+        }
+
+        .form-container:hover::before {
+            opacity: 1;
+        }
+
+        .text-center {
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .text-center i {
+            font-size: 3rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        .text-center h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+            position: relative;
+        }
+
+        .form-group label {
+            font-size: 1rem;
+            color: var(--dark);
+            font-weight: 600;
+            display: block;
+            margin-bottom: 0.6rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 1rem 1.2rem;
+            font-size: var(--font-size);
+            border-radius: var(--border-radius);
+            border: 2px solid transparent;
+            background-color: var(--input-bg);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 8px 15px rgba(233, 30, 99, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .form-control::placeholder {
+            color: #9e9e9e;
+        }
+
+        .input-icon-wrap {
+            position: relative;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary);
+        }
+
+        .form-control.with-icon {
+            padding-left: 3rem;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: var(--primary);
+            transition: all 0.3s ease;
+            z-index: 2;
+        }
+
+        .password-toggle:hover {
+            color: var(--secondary);
+        }
+
+        .btn {
+            padding: 1rem 0;
+            background: linear-gradient(135deg, var(--primary), var(--primary-gradient));
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(233, 30, 99, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: all 0.6s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(233, 30, 99, 0.3);
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn i {
+            margin-right: 8px;
+        }
+
+        .sign-in-link {
+            margin-top: 1.5rem;
+            font-size: 1rem;
+            text-align: center;
+        }
+
+        .sign-in-link p {
+            color: #555;
+        }
+
+        .sign-in-link a {
+            color: var(--primary);
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+            display: inline-block;
+            margin-left: 5px;
+        }
+
+        .sign-in-link a::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            transform: scaleX(0);
+            transform-origin: bottom right;
+            transition: transform 0.3s ease;
+        }
+
+        .sign-in-link a:hover::after {
+            transform: scaleX(1);
+            transform-origin: bottom left;
+        }
+
+        .form-divider {
+            display: flex;
+            align-items: center;
+            margin: 1.5rem 0;
+            color: #777;
+        }
+
+        .form-divider::before,
+        .form-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #ddd;
+        }
+
+        .form-divider span {
+            padding: 0 1rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .flashes {
+            list-style: none;
+            padding: 0.8rem 1rem;
+            margin-bottom: 1.5rem;
+            border-radius: var(--border-radius);
+            background: rgba(255, 82, 82, 0.1);
+            border-left: 4px solid #ff5252;
+            color: #d32f2f;
+            font-size: 0.9rem;
+        }
+
+        .flashes li {
+            margin: 0.3rem 0;
+        }
+
+        .progress-bars {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 33.33%;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            position: absolute;
+            animation: progress 3s infinite linear;
+        }
+
+        .progress-bar:nth-child(1) {
+            animation-delay: 0s;
+            left: -25%;
+        }
+
+        .progress-bar:nth-child(2) {
+            animation-delay: 0.8s;
+            left: -50%;
+        }
+
+        .progress-bar:nth-child(3) {
+            animation-delay: 1.6s;
+            left: -75%;
+        }
+
+        @keyframes progress {
+            0% {
+                transform: translateX(0%);
+            }
+            100% {
+                transform: translateX(400%);
+            }
+        }
+
+        @media (max-width: 991px) {
+            .container {
+                flex-direction: column;
+                padding: 1rem;
+            }
+            
+            header {
+                margin-right: 0;
+                margin-bottom: 2rem;
+                padding: 0 1rem;
+            }
+            
+            header h1 {
+                font-size: 2.8rem;
+            }
+            
+            .form-container {
+                max-width: 100%;
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 767px) {
+            header h1 {
+                font-size: 2.3rem;
+            }
+            
+            header p {
+                font-size: 1rem;
+            }
+            
+            .form-container {
+                padding: 1.5rem;
+            }
+            
+            .text-center h2 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="blood-cells">
+        <div class="cell" style="width: 80px; height: 80px; top: 15%; left: 10%; animation-duration: 20s;"></div>
+        <div class="cell" style="width: 100px; height: 100px; top: 60%; left: 5%; animation-duration: 25s;"></div>
+        <div class="cell" style="width: 60px; height: 60px; top: 30%; left: 85%; animation-duration: 18s;"></div>
+        <div class="cell" style="width: 120px; height: 120px; top: 70%; left: 80%; animation-duration: 22s;"></div>
+        <div class="cell" style="width: 50px; height: 50px; top: 20%; left: 70%; animation-duration: 15s;"></div>
+        <div class="cell" style="width: 70px; height: 70px; top: 50%; left: 40%; animation-duration: 23s;"></div>
+    </div>
+
+    <div class="container">
+        <header>
+            <span class="tagline">Advanced Blood Analysis</span>
+            <h1>BloodDetect System</h1>
+            <p>Join our cutting-edge platform that revolutionizes blood analysis with AI-powered diagnostics and real-time monitoring for healthcare professionals.</p>
+        </header>
+
+        <div class="form-container">
+            <div class="text-center">
+                <i class="fas fa-user-plus"></i>
+                <h2>Create Account</h2>
+                <p>Get started with your personalized dashboard</p>
+            </div>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            <ul class="flashes">
+                {% for category, message in messages %}
+                <li class="{{ category }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            {% endwith %}
+
+            <form action="/signup" method="post">
+                <div class="form-group">
+                    <label for="fullname">Full Name</label>
+                    <div class="input-icon-wrap">
+                        <i class="fas fa-user input-icon"></i>
+                        <input type="text" id="fullname" name="fullname" class="form-control with-icon" placeholder="Enter your full name" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <div class="input-icon-wrap">
+                        <i class="fas fa-envelope input-icon"></i>
+                        <input type="email" id="email" name="email" class="form-control with-icon" placeholder="Enter your email" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <div class="input-icon-wrap">
+                        <i class="fas fa-id-badge input-icon"></i>
+                        <input type="text" id="username" name="username" class="form-control with-icon" placeholder="Choose a username" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <div class="input-icon-wrap">
+                        <i class="fas fa-lock input-icon"></i>
+                        <input type="password" id="password" name="password" class="form-control with-icon" placeholder="Choose a password" required>
+                        <i class="fas fa-eye password-toggle" onclick="togglePassword('password')"></i>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirmpassword">Confirm Password</label>
+                    <div class="input-icon-wrap">
+                        <i class="fas fa-lock input-icon"></i>
+                        <input type="password" id="confirmpassword" name="confirmpassword" class="form-control with-icon" placeholder="Confirm your password" required>
+                        <i class="fas fa-eye password-toggle" onclick="togglePassword('confirmpassword')"></i>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn">
+                    <i class="fas fa-user-plus"></i> Create Account
+                </button>
+
+                <div class="sign-in-link">
+                    <p>Already have an account? <a href="/login">Sign In</a></p>
+                </div>
+            </form>
+
+            <div class="progress-bars">
+                <div class="progress-bar"></div>
+                <div class="progress-bar"></div>
+                <div class="progress-bar"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function togglePassword(id) {
+            var passwordField = document.getElementById(id);
+            var toggleIcon = passwordField.nextElementSibling;
+            
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+                toggleIcon.classList.remove("fa-eye");
+                toggleIcon.classList.add("fa-eye-slash");
+            } else {
+                passwordField.type = "password";
+                toggleIcon.classList.remove("fa-eye-slash");
+                toggleIcon.classList.add("fa-eye");
+            }
+        }
+
+        // Create random floating animations for blood cells
+        document.addEventListener('DOMContentLoaded', function() {
+            const cells = document.querySelectorAll('.cell');
+            cells.forEach(cell => {
+                const randomDelay = Math.random() * 5;
+                cell.style.animationDelay = `${randomDelay}s`;
+            });
+        });
+    </script>
+</body>
+
+</html>
