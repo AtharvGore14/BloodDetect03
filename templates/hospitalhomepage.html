@@ -3,9 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Welcome | FutureMed</title>
+  <title>Home - BloodDetect System</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='logo.jpg') }}">
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap');
     
@@ -96,26 +97,11 @@
     }
 
     .logo-icon svg {
-      animation: swaySVG 2.5s ease-in-out infinite;
-      transition: filter 0.3s, animation 0.3s;
+      transition: filter 0.3s;
     }
-    @keyframes swaySVG {
-      0% { transform: rotate(0deg); }
-      20% { transform: rotate(12deg); }
-      50% { transform: rotate(-12deg); }
-      80% { transform: rotate(12deg); }
-      100% { transform: rotate(0deg); }
-    }
+
     .logo-icon:hover svg {
-      animation: swaySVGHover 1.5s ease-in-out infinite;
       filter: drop-shadow(0 0 12px #ff3b6ecc);
-    }
-    @keyframes swaySVGHover {
-      0% { transform: rotate(0deg); }
-      20% { transform: rotate(15deg); }
-      50% { transform: rotate(-15deg); }
-      80% { transform: rotate(15deg); }
-      100% { transform: rotate(0deg); }
     }
 
     .logo {
@@ -174,6 +160,7 @@
       position: relative;
       overflow: visible;
       display: flex;
+      gap:5px;
       align-items: center;
     }
     .nav-link.active,
@@ -390,6 +377,16 @@
       50% { transform: translateY(-20px) rotate(180deg); }
     }
 
+    .hero-image .animated-hand {
+      filter: drop-shadow(0 8px 32px rgba(255,0,60,0.15));
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+      100% { transform: translateY(0); }
+    }
+
     /* Features Section */
     .features-section {
       padding: 6rem;
@@ -510,7 +507,8 @@
       height: 500px;
       background: #23243a;
       border: 1px solid var(--glass-border);
-      border-radius: 20px;
+      border-radius: 24px;
+      overflow: hidden;
       display: flex;
       flex-direction: column;
       z-index: 999;
@@ -689,6 +687,509 @@
       0%, 80%, 100% { opacity: 0.5; transform: translateY(0); }
       40% { opacity: 1; transform: translateY(-6px); }
     }
+
+    /* Process Section Styles */
+    .process-section {
+      padding: 6rem;
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: 24px;
+      margin: 4rem auto;
+      max-width: 1400px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .process-section::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: conic-gradient(from 0deg, transparent, rgba(225, 29, 72, 0.1), transparent, rgba(14, 165, 233, 0.1), transparent);
+      animation: rotate 20s linear infinite;
+      z-index: -1;
+    }
+
+    .process-steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin-top: 4rem;
+    }
+
+    .process-step {
+      text-align: center;
+      padding: 2rem;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 16px;
+      border: 1px solid var(--glass-border);
+      transition: transform 0.3s ease;
+      backdrop-filter: blur(10px);
+    }
+
+    .process-step:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .step-icon {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 1.5rem;
+      background: var(--gradient-primary);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.3s ease;
+    }
+
+    .process-step:hover .step-icon {
+      transform: scale(1.1);
+    }
+
+    .step-icon i {
+      font-size: 2rem;
+      color: white;
+    }
+
+    .process-step h3 {
+      color: var(--text-primary);
+      margin-bottom: 1rem;
+      font-size: 1.5rem;
+    }
+
+    .process-step p {
+      color: var(--text-secondary);
+      font-size: 1rem;
+    }
+
+    /* Info Cards Section Styles */
+    .info-cards-section {
+      padding: 6rem;
+      margin: 4rem auto;
+      max-width: 1400px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .info-cards-section::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: conic-gradient(from 90deg, transparent, rgba(139, 92, 246, 0.1), transparent, rgba(236, 72, 153, 0.1), transparent);
+      animation: rotate 20s linear infinite;
+      z-index: -1;
+    }
+
+    .info-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      margin-top: 4rem;
+    }
+
+    .info-card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: 16px;
+      padding: 2rem;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .info-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), transparent);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .info-card:hover::before {
+      opacity: 1;
+    }
+
+    .card-icon {
+      width: 60px;
+      height: 60px;
+      background: var(--gradient-primary);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .card-icon i {
+      font-size: 1.5rem;
+      color: white;
+    }
+
+    .info-card h3 {
+      color: var(--text-primary);
+      margin-bottom: 1rem;
+      font-size: 1.3rem;
+    }
+
+    .info-card p {
+      color: var(--text-secondary);
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    /* Blood Types Section Styles */
+    .blood-types-section {
+      padding: 6rem;
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: 24px;
+      margin: 4rem auto;
+      max-width: 1400px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .blood-types-section::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: conic-gradient(from 180deg, transparent, rgba(14, 165, 233, 0.1), transparent, rgba(225, 29, 72, 0.1), transparent);
+      animation: rotate 20s linear infinite;
+      z-index: -1;
+    }
+
+    .blood-types-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      margin-top: 4rem;
+    }
+
+    .blood-type-card {
+      text-align: center;
+      padding: 2rem;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 16px;
+      border: 1px solid var(--glass-border);
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .blood-type-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), transparent);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .blood-type-card:hover::before {
+      opacity: 1;
+    }
+
+    .blood-type-icon {
+      width: 60px;
+      height: 60px;
+      margin: 0 auto 1.5rem;
+      background: var(--gradient-primary);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: white;
+      box-shadow: 0 0 20px rgba(225, 29, 72, 0.3);
+    }
+
+    .blood-type-card:hover .blood-type-icon {
+      box-shadow: 0 0 30px rgba(225, 29, 72, 0.5);
+    }
+
+    .blood-type-card h3 {
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+      font-size: 1.3rem;
+    }
+
+    .blood-type-card p {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+
+    /* Testimonials Section Styles */
+    .testimonials-section {
+      padding: 6rem;
+      margin: 4rem auto;
+      max-width: 1400px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .testimonials-section::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: conic-gradient(from 270deg, transparent, rgba(139, 92, 246, 0.1), transparent, rgba(14, 165, 233, 0.1), transparent);
+      animation: rotate 20s linear infinite;
+      z-index: -1;
+    }
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 4rem;
+    }
+
+    .testimonial-card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: 16px;
+      padding: 2rem;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .testimonial-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), transparent);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .testimonial-card:hover::before {
+      opacity: 1;
+    }
+
+    .testimonial-content {
+      margin-bottom: 1.5rem;
+    }
+
+    .testimonial-content p {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      line-height: 1.6;
+      font-style: italic;
+    }
+
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .author-avatar {
+      width: 50px;
+      height: 50px;
+      background: var(--gradient-primary);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.3s ease;
+    }
+
+    .author-avatar i {
+      font-size: 1.5rem;
+      color: white;
+    }
+
+    .author-info h4 {
+      color: var(--text-primary);
+      font-size: 1.1rem;
+      margin-bottom: 0.2rem;
+    }
+
+    .author-info p {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+
+    /* CTA Section Styles */
+    .cta-section {
+      padding: 6rem;
+      background: var(--gradient-primary);
+      margin: 4rem auto;
+      max-width: 1400px;
+      border-radius: 24px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: conic-gradient(from 45deg, transparent, rgba(255, 255, 255, 0.1), transparent, rgba(255, 255, 255, 0.05), transparent);
+      animation: rotate 20s linear infinite;
+      z-index: 0;
+    }
+
+    .cta-content {
+      max-width: 800px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .cta-content h2 {
+      color: white;
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .cta-content p {
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+    }
+
+    .cta-content .btn-primary {
+      background: white;
+      color: var(--primary-red);
+      font-size: 1.2rem;
+      padding: 1rem 2.5rem;
+    }
+
+    .cta-content .btn-primary:hover {
+      background: rgba(255, 255, 255, 0.9);
+      transform: translateY(-2px);
+    }
+
+    @media (max-width: 768px) {
+      .process-section,
+      .info-cards-section,
+      .blood-types-section,
+      .testimonials-section,
+      .cta-section {
+        padding: 3rem 1.5rem;
+      }
+
+      .cta-content h2 {
+        font-size: 2rem;
+      }
+
+      .cta-content p {
+        font-size: 1.1rem;
+      }
+    }
+
+    /* Footer */
+    .footer {
+      background: var(--darker-bg);
+      padding: 4rem 5% 2rem;
+      margin-top: 4rem;
+      border-top: 1px solid var(--glass-border);
+      position: relative;
+    }
+
+    .footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: var(--gradient-primary);
+    }
+
+    .footer-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 3rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .footer-col h3 {
+      font-size: 1.3rem;
+      margin-bottom: 1.5rem;
+      color: var(--text-primary);
+      position: relative;
+      padding-bottom: 0.5rem;
+    }
+
+    .footer-col h3::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 50px;
+      height: 2px;
+      background: var(--gradient-primary);
+    }
+
+    .footer-col p,
+    .footer-col a {
+      color: var(--text-muted);
+      margin-bottom: 0.8rem;
+      display: block;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .footer-col a:hover {
+      color: var(--primary-red);
+      transform: translateX(5px);
+    }
+
+    .contact-info {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .contact-info i {
+      margin-right: 10px;
+      color: var(--primary-red);
+      width: 20px;
+    }
+
+    .copyright {
+      text-align: center;
+      padding-top: 2rem;
+      margin-top: 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text-muted);
+    }
   </style>
 </head>
 <body>
@@ -833,13 +1334,100 @@
       </div>
     </section>
 
-    <section class="features-section">
+   
+
+    <!-- Process Section -->
+    <section class="process-section">
       <div class="section-title-container">
-        <div class="section-subtitle">Key Features</div>
-        <h2 class="section-title">Everything You Need For Blood Group Detection</h2>
-        <p class="section-description">Our platform offers powerful tools to help you detect, analyze, and understand blood types through fingerprint patterns.</p>
+        <div class="section-subtitle">How It Works</div>
+        <h2 class="section-title">Simple Steps to Detect Blood Group</h2>
+        <p class="section-description">Our advanced AI technology makes blood group detection as simple as taking a photo.</p>
+      </div>
+
+      <div class="process-steps">
+        <div class="process-step">
+          <div class="step-icon">
+            <i class="fas fa-fingerprint"></i>
+          </div>
+          <h3>Upload Fingerprint</h3>
+          <p>Take a clear photo of your fingerprint or upload an existing image.</p>
+        </div>
+        <div class="process-step">
+          <div class="step-icon">
+            <i class="fas fa-brain"></i>
+          </div>
+          <h3>AI Analysis</h3>
+          <p>Our AI analyzes the unique patterns in your fingerprint.</p>
+        </div>
+        <div class="process-step">
+          <div class="step-icon">
+            <i class="fas fa-vial"></i>
+          </div>
+          <h3>Get Results</h3>
+          <p>Receive your blood group prediction with detailed analysis.</p>
+        </div>
       </div>
     </section>
+
+    <!-- Information Cards Section -->
+    <section class="info-cards-section">
+      <div class="section-title-container">
+        <div class="section-subtitle">Why Choose Us</div>
+        <h2 class="section-title">Advanced Blood Group Detection</h2>
+        <p class="section-description">Experience the future of non-invasive blood group detection technology.</p>
+      </div>
+
+      <div class="info-cards-grid">
+        <div class="info-card">
+          <div class="card-icon">
+            <i class="fas fa-microscope"></i>
+          </div>
+          <h3>Advanced Technology</h3>
+          <p>Utilizing cutting-edge AI and machine learning algorithms for precise blood group detection.</p>
+        </div>
+        <div class="info-card">
+          <div class="card-icon">
+            <i class="fas fa-clock"></i>
+          </div>
+          <h3>Quick Results</h3>
+          <p>Get your blood group prediction within seconds, no waiting required.</p>
+        </div>
+        <div class="info-card">
+          <div class="card-icon">
+            <i class="fas fa-shield-alt"></i>
+          </div>
+          <h3>Secure & Private</h3>
+          <p>Your data is encrypted and protected with enterprise-grade security measures.</p>
+        </div>
+        <div class="info-card">
+          <div class="card-icon">
+            <i class="fas fa-chart-line"></i>
+          </div>
+          <h3>High Accuracy</h3>
+          <p>Our system achieves remarkable accuracy in blood group prediction.</p>
+        </div>
+        <div class="info-card">
+          <div class="card-icon">
+            <i class="fas fa-mobile-alt"></i>
+          </div>
+          <h3>Mobile Friendly</h3>
+          <p>Access our platform from any device with a responsive, user-friendly interface.</p>
+        </div>
+        <div class="info-card">
+          <div class="card-icon">
+            <i class="fas fa-file-medical"></i>
+          </div>
+          <h3>Detailed Reports</h3>
+          <p>Receive comprehensive analysis and detailed reports of your blood group detection.</p>
+        </div>
+      </div>
+    </section>
+
+    
+
+
+    <!-- Call to Action Section -->
+  
   </main>
 
   <!-- DNA-themed Chat Toggle -->
@@ -871,6 +1459,46 @@
       <button type="submit" id="sendButton">Send</button>
     </form>
   </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-col">
+        <h3>About BloodDetect</h3>
+        <p>BloodDetect is an innovative platform that uses AI to detect and analyze blood disorders with high accuracy, making healthcare more accessible.</p>
+      </div>
+      
+      <div class="footer-col">
+        <h3>Quick Links</h3>
+        <a href="{{ url_for('home') }}">Home</a>
+        <a href="{{ url_for('about') }}">About Us</a>
+        <a href="{{ url_for('team') }}">Our Team</a>
+        <a href="{{ url_for('login') }}">Predictor Tool</a>
+      </div>
+      
+      <div class="footer-col">
+        <h3>Contact & Location</h3>
+        <div class="contact-info">
+          <i class="fas fa-map-marker-alt"></i>
+          <span>Vishwakarma Institute of Technology,<br>
+          666, Upper Indiranagar, Bibwewadi,<br>
+          Pune, Maharashtra, India - 411037</span>
+        </div>
+        <div class="contact-info">
+          <i class="fas fa-globe"></i>
+          <a href="https://www.vit.edu/" target="_blank">www.vit.edu</a>
+        </div>
+        <div class="contact-info">
+          <i class="fas fa-clock"></i>
+          <span>Mon-Fri: 10am - 5pm</span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="copyright">
+      <p>&copy; 2025 BloodDetect System. All rights reserved.</p>
+    </div>
+  </footer>
 
   <script>
     // Mobile menu functionality
@@ -1039,3 +1667,4 @@
   </script>
 </body>
 </html> 
+

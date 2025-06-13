@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - BloodDetect System</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='logo.jpg') }}">
     <style>
         :root {
             --primary: #e91e63;
@@ -345,7 +345,7 @@
         .password-toggle {
             position: absolute;
             right: 20px;
-            top: 60%;
+            top: 67%;
             transform: translateY(-50%);
             cursor: pointer;
             color: #b0b0c0;
@@ -732,18 +732,10 @@
             {% endif %}
             {% endwith %}
 
-            <div class="social-login">
-                <button class="social-btn">
-                    <i class="fab fa-facebook-f"></i>
-                </button>
-                <button class="social-btn">
-                    <i class="fab fa-google"></i>
-                </button>
-            </div>
-
+          
             <div class="divider">
                 <div class="divider-line"></div>
-                <div class="divider-text">or sign in with</div>
+                <div class="divider-text">Enter your credentials</div>
                 <div class="divider-line"></div>
             </div>
 
