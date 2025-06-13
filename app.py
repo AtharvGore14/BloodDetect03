@@ -26,13 +26,6 @@ app = Flask(__name__, template_folder='templates')
 app.secret_key = 'your_secret_key'
 app.config['UPLOAD_FOLDER'] = 'static/uploads/'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
-app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
-    'pool_size': 10,
-    'pool_recycle': 3600,
-    'pool_pre_ping': True,
-    'pool_use_lifo': True
-}
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 # Groq API configuration
@@ -839,38 +832,6 @@ def speech_to_text():
     except Exception as e:
         logger.error(f"Error in speech-to-text endpoint: {str(e)}")
         return jsonify({"error": "An unexpected error occurred"}), 500
-
-# Add error handlers
-@app.errorhandler(500)
-def internal_error(error):
-    db.session.rollback()
-    return render_template('error.html', error="Internal Server Error"), 500
-
-@app.errorhandler(502)
-def bad_gateway(error):
-    return render_template('error.html', error="Bad Gateway"), 502
-
-@app.errorhandler(404)
-def not_found_error(error):
-    return render_template('error.html', error="Page Not Found"), 404
-
-# Add before_request handler for database connection
-@app.before_request
-def before_request():
-    try:
-        db.session.execute('SELECT 1')
-    except Exception as e:
-        db.session.rollback()
-        raise
-
-# Add after_request handler
-@app.after_request
-def after_request(response):
-    try:
-        db.session.commit()
-    except Exception as e:
-        db.session.rollback()
-    return response
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))

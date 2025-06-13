@@ -100,22 +100,22 @@
       transition: filter 0.3s, animation 0.3s;
     }
     @keyframes swaySVG {
-      0% { transform: rotate(180deg); }
-      20% { transform: rotate(192deg); }
-      50% { transform: rotate(168deg); }
-      80% { transform: rotate(192deg); }
-      100% { transform: rotate(180deg); }
+      0% { transform: rotate(0deg); }
+      20% { transform: rotate(12deg); }
+      50% { transform: rotate(-12deg); }
+      80% { transform: rotate(12deg); }
+      100% { transform: rotate(0deg); }
     }
     .logo-icon:hover svg {
       animation: swaySVGHover 1.5s ease-in-out infinite;
       filter: drop-shadow(0 0 12px #ff3b6ecc);
     }
     @keyframes swaySVGHover {
-      0% { transform: rotate(180deg); }
-      20% { transform: rotate(195deg); }
-      50% { transform: rotate(165deg); }
-      80% { transform: rotate(195deg); }
-      100% { transform: rotate(180deg); }
+      0% { transform: rotate(0deg); }
+      20% { transform: rotate(15deg); }
+      50% { transform: rotate(-15deg); }
+      80% { transform: rotate(15deg); }
+      100% { transform: rotate(0deg); }
     }
 
     .logo {
